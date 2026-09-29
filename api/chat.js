@@ -1,9 +1,8 @@
 // Serverless chat endpoint for Mohamed Ali Aoun's portfolio.
-// Runs on Vercel as /api/chat. Calls Groq (free tier) with an OpenAI-compatible API.
+// Runs on Vercel as /api/chat. Streams the answer from Groq (free tier), OpenAI-compatible API.
 // The API key is read from the environment variable GROQ_API_KEY (set it in Vercel, never in this file).
 //
-// This version asks Groq which models are currently available and picks one automatically,
-// so it never breaks when a specific model name is retired.
+// It asks Groq which models are live and picks one automatically, then streams the reply token by token.
 //
 // To switch to Mistral instead of Groq:
 //   - BASE -> 'https://api.mistral.ai/v1'
@@ -77,18 +76,14 @@ ${DALI_CONTEXT}`;
 const RATE = new Map();
 const WINDOW_MS = 60 * 1000;
 const MAX_PER_WINDOW = 12;
+const FAIL_MSG = "Sorry, I could not get an answer just now. You can always email Dali at mohamed-ali.aoun@dauphine.eu.";
 
-// Cache the chosen model across warm invocations.
 let CACHED_MODEL = null;
 
-// Ask Groq which models are live right now and pick the best available chat model.
 async function resolveModel(key, force) {
   if (CACHED_MODEL && !force) return CACHED_MODEL;
   const r = await fetch(`${BASE}/models`, { headers: { Authorization: `Bearer ${key}` } });
-  if (!r.ok) {
-    let d = ''; try { d = await r.text(); } catch (e) {}
-    throw new Error(`model list HTTP ${r.status}: ${d.slice(0, 160)}`);
-  }
+  if (!r.ok) throw new Error('model list unavailable');
   const data = await r.json();
   const ids = (data.data || [])
     .map(m => m && m.id)
@@ -103,22 +98,24 @@ async function resolveModel(key, force) {
     if (hit) { CACHED_MODEL = hit; return hit; }
   }
   if (ids.length) { CACHED_MODEL = ids[0]; return ids[0]; }
-  throw new Error('no chat models available on this account');
+  throw new Error('no chat models available');
+}
+
+function sendText(res, msg) {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.status(200).end(msg);
 }
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
   const key = process.env.GROQ_API_KEY;
-  if (!key) {
-    res.status(200).json({ reply: "The assistant is not configured yet: the site owner still needs to add the GROQ_API_KEY environment variable in Vercel, then redeploy." });
-    return;
-  }
+  if (!key) { sendText(res, "The assistant is not configured yet: the site owner still needs to add the GROQ_API_KEY environment variable in Vercel, then redeploy."); return; }
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
   const now = Date.now();
   const rec = RATE.get(ip);
   if (rec && now - rec.ts < WINDOW_MS) {
-    if (rec.count >= MAX_PER_WINDOW) { res.status(200).json({ reply: "I'm getting a lot of questions at once. Please try again in a minute." }); return; }
+    if (rec.count >= MAX_PER_WINDOW) { sendText(res, "I'm getting a lot of questions at once. Please try again in a minute."); return; }
     rec.count++;
   } else { RATE.set(ip, { count: 1, ts: now }); }
 
@@ -131,41 +128,65 @@ module.exports = async (req, res) => {
       .map(m => ({ role: m.role, content: m.content.slice(0, 1000) }));
   } catch (e) { messages = []; }
 
-  let lastError = 'unknown error';
+  // Get the completion response, retrying once with a fresh model if the first choice is rejected.
+  let r = null;
   for (let attempt = 0; attempt < 2; attempt++) {
     let model;
+    try { model = await resolveModel(key, attempt === 1); }
+    catch (e) { sendText(res, FAIL_MSG); return; }
     try {
-      model = await resolveModel(key, attempt === 1); // on retry, force a fresh model list
-    } catch (e) {
-      lastError = e.message;
-      break;
-    }
-    try {
-      const r = await fetch(`${BASE}/chat/completions`, {
+      const resp = await fetch(`${BASE}/chat/completions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
         body: JSON.stringify({
-          model,
-          temperature: 0.4,
-          max_tokens: 400,
+          model, temperature: 0.4, max_tokens: 400, stream: true,
           messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
         })
       });
-      if (r.ok) {
-        const data = await r.json();
-        const reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim()
-          || "I'm not sure about that one. Feel free to email Dali at mohamed-ali.aoun@dauphine.eu.";
-        res.status(200).json({ reply });
-        return;
-      }
-      let detail = ''; try { detail = await r.text(); } catch (e) {}
-      lastError = `HTTP ${r.status} on "${model}": ${detail.slice(0, 200)}`;
-      if (r.status === 401 || r.status === 403) break; // auth problem, no point retrying
-      CACHED_MODEL = null; // model problem: drop cache and let the loop re-resolve once
+      if (resp.ok) { r = resp; break; }
+      let d = ''; try { d = await resp.text(); } catch (e) {}
+      if (attempt === 0 && /model|decommission|not.*support/i.test(d)) { CACHED_MODEL = null; continue; }
+      sendText(res, FAIL_MSG); return;
     } catch (e) {
-      lastError = String(e && e.message ? e.message : e).slice(0, 200);
+      if (attempt === 0) { CACHED_MODEL = null; continue; }
+      sendText(res, FAIL_MSG); return;
     }
   }
+  if (!r) { sendText(res, FAIL_MSG); return; }
 
-  res.status(200).json({ reply: `I could not get an answer from the AI provider just now. You can email Dali at mohamed-ali.aoun@dauphine.eu. (Debug: ${lastError})` });
+  // Stream: parse Groq's SSE and write only the text tokens to the client.
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('X-Accel-Buffering', 'no');
+  if (typeof res.flushHeaders === 'function') res.flushHeaders();
+
+  try {
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let wrote = false;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      let idx;
+      while ((idx = buffer.indexOf('\n')) >= 0) {
+        const line = buffer.slice(0, idx);
+        buffer = buffer.slice(idx + 1);
+        const t = line.trim();
+        if (!t.startsWith('data:')) continue;
+        const payload = t.slice(5).trim();
+        if (payload === '[DONE]') { if (!wrote) res.write(FAIL_MSG); res.end(); return; }
+        try {
+          const j = JSON.parse(payload);
+          const delta = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
+          if (delta) { res.write(delta); wrote = true; }
+        } catch (e) {}
+      }
+    }
+    if (!wrote) res.write(FAIL_MSG);
+    res.end();
+  } catch (e) {
+    try { res.end(); } catch (_) {}
+  }
 };
