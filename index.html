@@ -626,18 +626,35 @@ tb.addEventListener('click',()=>{
     try{
       const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});
       t.remove();
-      const el=bubble('','bot'); let full='';
-      if(r.body && r.body.getReader){
-        const reader=r.body.getReader(), dec=new TextDecoder();
-        while(true){
-          const {done,value}=await reader.read();
-          if(done) break;
-          full+=dec.decode(value,{stream:true});
-          el.textContent=full; body.scrollTop=body.scrollHeight;
+      const el=bubble('','bot');
+      let target='', shown=0, reading=true;
+      // read the network stream into a buffer as fast as it arrives
+      const pump=(async()=>{
+        try{
+          if(r.body && r.body.getReader){
+            const reader=r.body.getReader(), dec=new TextDecoder();
+            while(true){ const {done,value}=await reader.read(); if(done) break; target+=dec.decode(value,{stream:true}); }
+          } else { target=await r.text(); }
+        } finally { reading=false; }
+      })();
+      // reveal the buffer at a steady typewriter pace (with catch-up for long answers)
+      await new Promise(resolve=>{
+        let last=performance.now();
+        function tick(now){
+          const dt=Math.min(0.05,(now-last)/1000); last=now;
+          if(shown<target.length){
+            const backlog=target.length-shown;
+            let step=Math.max(1, Math.round(45*dt));      // ~45 characters per second
+            if(backlog>200) step+=Math.round((backlog-200)*0.15); // speed up if a lot is queued
+            shown=Math.min(target.length, shown+step);
+            el.textContent=target.slice(0,shown); body.scrollTop=body.scrollHeight;
+          }
+          if(reading || shown<target.length) requestAnimationFrame(tick); else resolve();
         }
-      } else {
-        full=await r.text(); el.textContent=full; body.scrollTop=body.scrollHeight;
-      }
+        requestAnimationFrame(tick);
+      });
+      await pump.catch(()=>{});
+      let full=target;
       if(!full.trim()){ full="Sorry, something went wrong. You can email Dali at mohamed-ali.aoun@dauphine.eu."; el.textContent=full; }
       history.push({role:'assistant',content:full});
     }catch(e){
