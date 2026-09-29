@@ -2,20 +2,14 @@
 // Runs on Vercel as /api/chat. Calls Groq (free tier) with an OpenAI-compatible API.
 // The API key is read from the environment variable GROQ_API_KEY (set it in Vercel, never in this file).
 //
+// This version asks Groq which models are currently available and picks one automatically,
+// so it never breaks when a specific model name is retired.
+//
 // To switch to Mistral instead of Groq:
-//   - API_URL -> 'https://api.mistral.ai/v1/chat/completions'
-//   - MODELS  -> ['mistral-small-latest']
+//   - BASE -> 'https://api.mistral.ai/v1'
 //   - use process.env.MISTRAL_API_KEY below and name the Vercel variable MISTRAL_API_KEY.
 
-const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-// The function tries these in order until one works, so a retired model name does not break the bot.
-const MODELS = [
-  'llama-3.3-70b-versatile',
-  'llama-3.1-8b-instant',
-  'llama-3.1-70b-versatile',
-  'llama3-70b-8192',
-  'gemma2-9b-it'
-];
+const BASE = 'https://api.groq.com/openai/v1';
 
 const DALI_CONTEXT = `
 IDENTITY
@@ -84,12 +78,38 @@ const RATE = new Map();
 const WINDOW_MS = 60 * 1000;
 const MAX_PER_WINDOW = 12;
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
+// Cache the chosen model across warm invocations.
+let CACHED_MODEL = null;
+
+// Ask Groq which models are live right now and pick the best available chat model.
+async function resolveModel(key, force) {
+  if (CACHED_MODEL && !force) return CACHED_MODEL;
+  const r = await fetch(`${BASE}/models`, { headers: { Authorization: `Bearer ${key}` } });
+  if (!r.ok) {
+    let d = ''; try { d = await r.text(); } catch (e) {}
+    throw new Error(`model list HTTP ${r.status}: ${d.slice(0, 160)}`);
   }
-  if (!process.env.GROQ_API_KEY) {
+  const data = await r.json();
+  const ids = (data.data || [])
+    .map(m => m && m.id)
+    .filter(Boolean)
+    .filter(id => !/(whisper|tts|embed|guard|moderation|vision)/i.test(id));
+  const prefs = [
+    /llama-3\.3-70b/i, /llama-4/i, /gpt-oss-120b/i, /gpt-oss-20b/i,
+    /llama.*70b/i, /70b/i, /llama-3\.1-8b/i, /instant/i, /versatile/i, /llama/i
+  ];
+  for (const p of prefs) {
+    const hit = ids.find(id => p.test(id));
+    if (hit) { CACHED_MODEL = hit; return hit; }
+  }
+  if (ids.length) { CACHED_MODEL = ids[0]; return ids[0]; }
+  throw new Error('no chat models available on this account');
+}
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
+  const key = process.env.GROQ_API_KEY;
+  if (!key) {
     res.status(200).json({ reply: "The assistant is not configured yet: the site owner still needs to add the GROQ_API_KEY environment variable in Vercel, then redeploy." });
     return;
   }
@@ -98,14 +118,9 @@ module.exports = async (req, res) => {
   const now = Date.now();
   const rec = RATE.get(ip);
   if (rec && now - rec.ts < WINDOW_MS) {
-    if (rec.count >= MAX_PER_WINDOW) {
-      res.status(200).json({ reply: "I'm getting a lot of questions at once. Please try again in a minute." });
-      return;
-    }
+    if (rec.count >= MAX_PER_WINDOW) { res.status(200).json({ reply: "I'm getting a lot of questions at once. Please try again in a minute." }); return; }
     rec.count++;
-  } else {
-    RATE.set(ip, { count: 1, ts: now });
-  }
+  } else { RATE.set(ip, { count: 1, ts: now }); }
 
   let messages = [];
   try {
@@ -114,19 +129,21 @@ module.exports = async (req, res) => {
       .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
       .slice(-8)
       .map(m => ({ role: m.role, content: m.content.slice(0, 1000) }));
-  } catch (e) {
-    messages = [];
-  }
+  } catch (e) { messages = []; }
 
   let lastError = 'unknown error';
-  for (const model of MODELS) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let model;
     try {
-      const r = await fetch(API_URL, {
+      model = await resolveModel(key, attempt === 1); // on retry, force a fresh model list
+    } catch (e) {
+      lastError = e.message;
+      break;
+    }
+    try {
+      const r = await fetch(`${BASE}/chat/completions`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
         body: JSON.stringify({
           model,
           temperature: 0.4,
@@ -134,7 +151,6 @@ module.exports = async (req, res) => {
           messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
         })
       });
-
       if (r.ok) {
         const data = await r.json();
         const reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim()
@@ -142,17 +158,14 @@ module.exports = async (req, res) => {
         res.status(200).json({ reply });
         return;
       }
-
-      let detail = '';
-      try { detail = await r.text(); } catch (e) {}
+      let detail = ''; try { detail = await r.text(); } catch (e) {}
       lastError = `HTTP ${r.status} on "${model}": ${detail.slice(0, 200)}`;
-      // Auth errors will fail on every model, so stop early.
-      if (r.status === 401 || r.status === 403) break;
+      if (r.status === 401 || r.status === 403) break; // auth problem, no point retrying
+      CACHED_MODEL = null; // model problem: drop cache and let the loop re-resolve once
     } catch (e) {
       lastError = String(e && e.message ? e.message : e).slice(0, 200);
     }
   }
 
-  // Temporary debug: shows the real reason in the chat so it can be fixed, then reverted to a clean message.
-  res.status(200).json({ reply: `I could not get an answer from the AI provider. Debug info (share this with whoever set up the site): ${lastError}` });
+  res.status(200).json({ reply: `I could not get an answer from the AI provider just now. You can email Dali at mohamed-ali.aoun@dauphine.eu. (Debug: ${lastError})` });
 };
