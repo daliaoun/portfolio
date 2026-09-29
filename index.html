@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mohamed Ali Aoun · AI Engineer</title>
+<meta name="description" content="Mohamed Ali Aoun (Dali), AI engineer. I build LLM, RAG and multi-agent systems and take them from prototype to production. Projects, experience and contact." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5EC;
+  --bg-alt:#EBEBDB;
+  --surface:#FCFCF6;
+  --border:#DCDCC5;
+  --ink:#222417;
+  --ink-soft:#565941;
+  --ink-faint:#8B8C73;
+  --accent:#5E6E2A;        /* olive */
+  --accent-deep:#465220;
+  --accent-2:#A9903A;      /* muted gold */
+  --accent-soft:#E7E8CF;
+  --shadow:0 1px 2px rgba(50,55,20,.05),0 10px 30px rgba(60,70,20,.07);
+  --shadow-lg:0 24px 60px rgba(50,60,20,.16);
+  --radius:16px;
+  --radius-sm:10px;
+  --maxw:1120px;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;
+    --ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;
+    --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;
+    --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.35);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;
+  --ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;
+  --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;
+  --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:.76rem;font-weight:500;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+.secnum{font-family:var(--mono);font-size:.8rem;color:var(--accent-2);font-weight:500}
+.muted{color:var(--ink-soft)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 84%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-color:var(--border)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-family:var(--mono);font-weight:600;font-size:1rem;letter-spacing:-.01em}
+.brand b{color:var(--accent)}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{font-family:var(--mono);font-size:.82rem;color:var(--ink-soft);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:.9rem;padding:10px 18px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.btn-primary:hover{box-shadow:var(--shadow-lg)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.theme-btn{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--ink)}
+.theme-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* HERO */
+.hero{padding:66px 0 58px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.hero h1{font-size:clamp(2.7rem,6vw,4.4rem);margin:12px 0 14px}
+.hero h1 .g{color:var(--accent)}
+.hero .lede{font-size:clamp(1.1rem,2vw,1.35rem);color:var(--ink);font-weight:500;line-height:1.4;margin:0 0 18px;max-width:40ch;font-family:var(--disp);letter-spacing:-.01em}
+.hero .intro{font-size:1.02rem;color:var(--ink-soft);max-width:50ch;margin:0 0 26px}
+.facts{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);padding:14px 18px;margin-bottom:26px;max-width:440px}
+.fact{display:flex;gap:12px;font-family:var(--mono);font-size:.82rem;padding:5px 0;border-bottom:1px dashed var(--border)}
+.fact:last-child{border-bottom:0}
+.fact .k{color:var(--accent);min-width:74px;font-weight:500}
+.fact .v{color:var(--ink-soft)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.photoframe{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/4.4}
+.photoframe img{width:100%;height:100%;object-fit:cover}
+.ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  background:linear-gradient(150deg,var(--accent-soft),var(--bg-alt));color:var(--accent-deep)}
+.ph .mono-monogram{font-family:var(--disp);font-weight:700;font-size:3.4rem;letter-spacing:-.03em;color:var(--accent)}
+.ph .note{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);letter-spacing:.04em}
+.hero-photo::after{content:"";position:absolute;inset:auto -22px -22px auto;width:120px;height:120px;background:radial-gradient(circle,var(--accent-2),transparent 70%);opacity:.35;border-radius:50%;z-index:-1}
+.hero-photo{position:relative}
+
+/* SECTIONS */
+section{padding:66px 0;position:relative}
+.alt-bg{background:var(--bg-alt)}
+.sec-head{margin-bottom:36px;max-width:64ch}
+.sec-head .top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sec-head h2{font-size:clamp(1.8rem,3.8vw,2.6rem)}
+.sec-head p{color:var(--ink-soft);margin:8px 0 0;font-size:1.03rem}
+
+/* PROJECTS */
+.group-label{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:30px 0 16px;display:flex;align-items:center;gap:12px}
+.group-label::after{content:"";height:1px;flex:1;background:var(--border)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.card .ctx{font-family:var(--mono);font-size:.7rem;font-weight:500;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+.card h3{font-size:1.18rem;margin:9px 0 8px}
+.card p{font-size:.92rem;color:var(--ink-soft);margin:0 0 14px;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);background:var(--bg-alt);border:1px solid var(--border);padding:3px 8px;border-radius:6px;font-weight:500}
+
+/* EXPERIENCE timeline */
+.timeline{position:relative}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.tl-item{position:relative;padding:0 0 28px 38px}
+.tl-item::before{content:"";position:absolute;left:1px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
+.tl-item:last-child{padding-bottom:0}
+.tl-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+.tl-role{font-family:var(--disp);font-size:1.16rem;font-weight:600}
+.tl-role .free{font-family:var(--sans);font-size:.85rem;font-weight:500;color:var(--ink-faint)}
+.tl-org{color:var(--accent);font-weight:600;font-size:.95rem}
+.tl-date{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);white-space:nowrap}
+.tl-item p{color:var(--ink-soft);margin:8px 0 0;font-size:.95rem}
+.tl-tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+
+/* SKILLS */
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.skill-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.skill-block h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:13px}
+.skill-block .tags{gap:7px}
+
+/* BEYOND / about */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;margin-bottom:44px}
+.about-text p{color:var(--ink-soft);margin:0 0 15px}
+.about-text strong{color:var(--ink);font-weight:600}
+.about-photo img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 20%;border-radius:var(--radius);box-shadow:var(--shadow-lg)}
+
+/* involvement compact rows */
+.inv-title{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 16px;display:flex;align-items:center;gap:12px}
+.inv-title::after{content:"";height:1px;flex:1;background:var(--border)}
+.inv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inv-row{display:flex;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;transition:border-color .2s,transform .15s}
+.inv-row:hover{border-color:var(--accent);transform:translateY(-2px)}
+.inv-thumb{width:52px;height:52px;border-radius:9px;object-fit:cover;flex:none;background:var(--accent-soft)}
+.ph-mini{display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,var(--accent-soft),var(--bg-alt));color:var(--accent);font-family:var(--mono);font-size:.58rem;letter-spacing:.04em}
+.inv-body{min-width:0}
+.inv-body h4{font-family:var(--disp);font-size:1rem;font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.inv-body .date{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);font-weight:400;white-space:nowrap}
+.inv-body .role{color:var(--accent);font-size:.82rem;font-weight:600;margin-top:1px}
+.inv-body p{font-size:.85rem;color:var(--ink-soft);margin:5px 0 0}
+
+/* speaking mini */
+.speak{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.speak-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.speak-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.speak-card .imgwrap{height:150px;background:linear-gradient(150deg,var(--accent-soft),var(--bg-alt))}
+.speak-card .imgwrap img{width:100%;height:100%;object-fit:cover}
+.speak-card .ph{height:100%}
+.speak-card .body{padding:16px 18px}
+.speak-card .ctx{font-family:var(--mono);font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+.speak-card h4{font-family:var(--disp);font-size:1.02rem;margin:5px 0 4px}
+.speak-card p{font-size:.85rem;color:var(--ink-soft);margin:0}
+
+/* CONTACT */
+.contact-card{background:linear-gradient(135deg,var(--accent-deep),var(--accent));border-radius:24px;padding:56px 44px;text-align:center;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.contact-card::before{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;background:rgba(255,255,255,.10);border-radius:50%}
+.contact-card h2{color:#fff;font-size:clamp(1.8rem,4vw,2.7rem);margin-bottom:12px}
+.contact-card p{color:rgba(255,255,255,.92);max-width:46ch;margin:0 auto 26px;font-size:1.02rem}
+.contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.clink{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:.92rem;transition:background .2s,transform .15s}
+.clink:hover{background:rgba(255,255,255,.26);transform:translateY(-2px)}
+.clink.solid{background:#fff;color:var(--accent-deep)}
+
+footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;color:var(--ink-faint);font-family:var(--mono);font-size:.78rem}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== CHAT WIDGET ===== */
+#chatFab{position:fixed;right:22px;bottom:22px;z-index:80;display:inline-flex;align-items:center;gap:9px;
+  background:var(--accent);color:#fff;border:none;cursor:pointer;padding:13px 18px;border-radius:999px;
+  font-family:var(--sans);font-weight:600;font-size:.92rem;box-shadow:var(--shadow-lg);transition:transform .15s}
+#chatFab:hover{transform:translateY(-2px)}
+#chatFab svg{width:18px;height:18px}
+#chatPanel{position:fixed;right:22px;bottom:22px;z-index:81;width:370px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 40px);
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-lg);
+  display:none;flex-direction:column;overflow:hidden}
+#chatPanel.open{display:flex}
+.chat-head{display:flex;align-items:center;gap:11px;padding:15px 16px;border-bottom:1px solid var(--border);background:var(--bg-alt)}
+.chat-head .av{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:.9rem;flex:none}
+.chat-head .t{font-family:var(--disp);font-weight:600;font-size:.98rem;line-height:1.1}
+.chat-head .s{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint)}
+.chat-head .x{margin-left:auto;background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:1.3rem;line-height:1;padding:4px 8px;border-radius:8px}
+.chat-head .x:hover{background:var(--border)}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:85%;padding:10px 13px;border-radius:13px;font-size:.9rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msg.bot{background:var(--bg-alt);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.chat-chip{font-size:.78rem;font-family:var(--sans);background:transparent;border:1px solid var(--border);color:var(--accent);
+  padding:7px 12px;border-radius:999px;cursor:pointer;transition:border-color .2s,background .2s}
+.chat-chip:hover{border-color:var(--accent);background:var(--accent-soft)}
+.typing{display:inline-flex;gap:4px;align-items:center;padding:12px 14px}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--ink-faint);animation:blink 1.2s infinite both}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.chat-foot{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px}
+.chat-foot input{flex:1;border:1px solid var(--border);background:var(--bg);color:var(--ink);border-radius:999px;padding:11px 15px;font-family:var(--sans);font-size:.9rem;outline:none}
+.chat-foot input:focus{border-color:var(--accent)}
+.chat-foot button{background:var(--accent);color:#fff;border:none;border-radius:50%;width:42px;height:42px;flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-foot button:disabled{opacity:.5;cursor:default}
+.chat-note{font-family:var(--mono);font-size:.62rem;color:var(--ink-faint);text-align:center;padding:0 12px 10px}
+@media(max-width:640px){
+  #chatPanel{right:8px;left:8px;bottom:8px;width:auto;height:78vh}
+  #chatFab{right:14px;bottom:14px}
+}
+svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.12em}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-photo{order:-1;max-width:380px}
+  .about-grid{grid-template-columns:1fr;gap:28px}
+  .about-photo{max-width:440px}
+  .proj-grid,.speak{grid-template-columns:repeat(2,1fr)}
+  .inv{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  body{font-size:16px}
+  .nav-links{display:none}
+  .proj-grid,.speak,.skill-grid{grid-template-columns:1fr}
+  .hero{padding:44px 0 40px}
+  section{padding:52px 0}
+  .nav-actions .btn .lbl{display:none}
+  .contact-card{padding:40px 22px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#top" class="brand">dali<b>.aoun</b></a>
+    <div class="nav-links">
+      <a href="#projects">projects</a>
+      <a href="#experience">experience</a>
+      <a href="#skills">skills</a>
+      <a href="#beyond">beyond</a>
+      <a href="#contact">contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn theme-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 3v1M12 20v1M4.2 4.2l.7.7M19.1 19.1l.7.7M3 12h1M20 12h1M4.2 19.8l.7-.7M19.1 4.9l.7-.7"/><circle cx="12" cy="12" r="4"/></svg>
+      </button>
+      <a href="assets/Mohamed_Ali_Aoun_CV.pdf" download class="btn btn-primary">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+        <span class="lbl">CV</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">AI Engineer · Tunis</span>
+      <h1>Mohamed Ali <span class="g">Aoun</span></h1>
+      <p class="lede">I build LLM, RAG and multi-agent systems, and take them from prototype to production.</p>
+      <p class="intro">Master's student in AI and Data Science, and a hands-on builder. I like problems that start messy and end in something people actually use. Friends call me Dali.</p>
+      <div class="facts mono">
+        <div class="fact"><span class="k">focus</span><span class="v">LLM apps · RAG · agent orchestration</span></div>
+        <div class="fact"><span class="k">studies</span><span class="v">MSc AI &amp; Data Science, Dauphine-PSL (top of class)</span></div>
+        <div class="fact"><span class="k">status</span><span class="v">open to an end-of-studies internship</span></div>
+      </div>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-photo reveal">
+      <div class="photoframe">
+        <!-- Drop your header photo at assets/hero.jpg and it will replace this placeholder automatically. -->
+        <img src="assets/hero.jpg" alt="Mohamed Ali Aoun" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="ph" style="display:none">
+          <div class="mono-monogram">MA</div>
+          <div class="note">header photo coming soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="top"><span class="secnum">01</span><span class="eyebrow">Selected work</span></div>
+      <h2>Projects</h2>
+      <p>Production AI systems, applied builds, and academic work. Every one started from a real problem.</p>
+    </div>
+
+    <div class="group-label reveal">Production &amp; applied AI</div>
+    <div class="proj-grid">
+      <div class="card reveal">
+        <span class="ctx">Kin'Yu · Oracle Cloud</span>
+        <h3>LAWAI</h3>
+        <p>End-to-end document verification and understanding pipeline for law firms. OCR plus structured extraction with strict Pydantic contracts and a per-document-type schema architecture, deployed to a client-facing app.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">LLM Applications</span><span class="tag">Prompt Engineering</span><span class="tag">OCI Document Understanding</span><span class="tag">OCI Generative AI</span><span class="tag">OCI Integration</span><span class="tag">Oracle APEX</span><span class="tag">Oracle Database 26ai</span><span class="tag">Oracle Cloud (OCI)</span><span class="tag">Docker</span><span class="tag">Git</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">VistaDeep</span>
+        <h3>Supply-Chain Risk Assistant</h3>
+        <p>Multi-agent assistant on a hand-rolled Python orchestrator: LLM-based routing with a keyword fallback, agents run concurrently via asyncio, and executions traced to a dedicated table for observability.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">asyncio</span><span class="tag">Multi-Agent Systems</span><span class="tag">Text-to-SQL</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Qdrant</span><span class="tag">Prompt Engineering</span><span class="tag">Git</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">Personal · Football</span>
+        <h3>World Cup 2026 Engine</h3>
+        <p>Probabilistic match and tournament prediction combining a Dixon-Coles model with XGBoost, Monte Carlo simulations and a dedicated penalty-shootout model. Documented on LinkedIn.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">XGBoost</span><span class="tag">Dixon-Coles</span><span class="tag">Monte Carlo</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span><span class="tag">Data Visualization</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">UmanLink</span>
+        <h3>Call-Center Analytics Tool</h3>
+        <p>Full-stack app (Python back-end, Flask interface) with automated pipelines for cleaning, processing and visualizing data. Surfaces call-failure causes and best call-back times, saving 40+ hours a month.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span><span class="tag">Data Visualization</span><span class="tag">Git</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">UmanLink</span>
+        <h3>Orientalent</h3>
+        <p>Intelligent recruitment platform. Automated HR pipeline with OCR and RAG-based candidate matching from natural-language job descriptions, digitizing records and speeding up hiring.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">LLM Applications</span><span class="tag">DeepSeek-R1</span><span class="tag">OpenCV</span><span class="tag">MongoDB</span><span class="tag">Angular</span><span class="tag">Git</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">UmanLink</span>
+        <h3>E-commerce Chatbot</h3>
+        <p>Multi-agent assistant for product search, order tracking and FAQ handling over a vector database and RAG, lifting conversion and offloading customer support.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">GPT-4</span><span class="tag">Multi-Agent Systems</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Chroma</span><span class="tag">Vector Databases</span><span class="tag">Streamlit</span><span class="tag">Git</span></div>
+      </div>
+    </div>
+
+    <div class="group-label reveal">Applied &amp; academic</div>
+    <div class="proj-grid">
+      <div class="card reveal">
+        <span class="ctx">Espérance Sportive de Tunis</span>
+        <h3>AI Swimming Assistant</h3>
+        <p>Full-stack AI chatbot for the EST swimming team. Session, progress and nutrition tracking with personalized programs, plus a search engine over 38,000+ historical competition records. Built in Agile.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">LLaMA 3.1</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Streamlit</span><span class="tag">Web Scraping</span><span class="tag">Agile / Scrum</span><span class="tag">Git</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">Academic · Graph Theory</span>
+        <h3>Seam Carving</h3>
+        <p>Content-aware image resizing built with graph modeling (DAG) and dynamic programming, preserving the visually important regions of an image while it is rescaled.</p>
+        <div class="tags"><span class="tag">Graph Theory</span><span class="tag">Dynamic Programming</span><span class="tag">Python</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">Academic · Data Analysis</span>
+        <h3>Social-Media Perception Study</h3>
+        <p>End-to-end study from questionnaire design to statistical analysis: preprocessing, PCA (ACP), MCA (ACM) and automatic classification of the collected data.</p>
+        <div class="tags"><span class="tag">R</span><span class="tag">PCA / MCA</span><span class="tag">Clustering</span><span class="tag">Statistical Learning</span><span class="tag">Data Visualization</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="ctx">Medianet</span>
+        <h3>SEO Report Automation</h3>
+        <p>Automated SEO reporting platform combining data analysis, dashboards and AI-generated summaries, cutting processing time by more than 90%.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Machine Learning</span><span class="tag">GPT-3.5</span><span class="tag">BeautifulSoup</span><span class="tag">Web Scraping</span><span class="tag">Pandas</span><span class="tag">Power BI</span><span class="tag">Data Visualization</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="alt-bg">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="top"><span class="secnum">02</span><span class="eyebrow">Career</span></div>
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">AI Engineer, Oracle Cloud</div><div class="tl-org">Kin'Yu Consulting</div></div><div class="tl-date">Jun 2026 – Sep 2026</div></div>
+        <p>Built <strong>LAWAI</strong>, an end-to-end document verification and understanding pipeline for law firms on Oracle Cloud. OCR and structured extraction with strict Pydantic interface contracts, agentic OCI Integration workflows, and a client-facing Oracle APEX app backed by Oracle Database 26ai.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">AI Engineer <span class="free">(Freelance)</span></div><div class="tl-org">VistaDeep</div></div><div class="tl-date">May 2026 – Jul 2026</div></div>
+        <p>Designed a supply-chain risk-intelligence assistant with a multi-agent architecture (Events, Index, Report, Formulation) on a hand-rolled Python orchestrator. LLM-based routing with a keyword fallback, concurrent execution via asyncio, and execution tracing for monitoring.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">AI Software Developer</div><div class="tl-org">UmanLink Digital Service</div></div><div class="tl-date">Sep 2024 – Mar 2025</div></div>
+        <p>Developed LLM- and RAG-based solutions that automate complex business processes: recruitment matching, a multi-agent e-commerce assistant, and a full-stack call-center analytics tool that saved 40+ hours a month.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">Data Science Intern</div><div class="tl-org">Medianet</div></div><div class="tl-date">Feb 2024 – Jul 2024</div></div>
+        <p>Built an AI-powered SEO reporting platform (analysis, dashboards, AI-generated summaries) that cut processing time from days to about 3 minutes, applying NLP with 97% accuracy.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">AI Instructor</div><div class="tl-org">Opus Lab</div></div><div class="tl-date">Aug 2026 – Sep 2026</div></div>
+        <p>Designed and delivered a hands-on AI development bootcamp for students aged 15 to 19 with no coding background, guiding each one to build their first chatbot and first AI agent.</p>
+        <div class="tl-tags"><span class="tag">Teaching</span><span class="tag">LLM</span><span class="tag">Prompt Engineering</span><span class="tag">Curriculum Design</span><span class="tag">Public Speaking</span><span class="tag">Mentoring</span></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-top"><div><div class="tl-role">Co-Founder</div><div class="tl-org">Croki (EdTech Startup)</div></div><div class="tl-date">Sep 2023 – Sep 2025</div></div>
+        <p>Co-founded an EdTech startup, owning operations, logistics, recruitment and product delivery, and learning what it takes to ship a real product and keep it running.</p>
+        <div class="tl-tags"><span class="tag">Entrepreneurship</span><span class="tag">Operations</span><span class="tag">Team Leadership</span><span class="tag">Event Management</span><span class="tag">Stakeholder Management</span><span class="tag">Marketing</span><span class="tag">Product</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="top"><span class="secnum">03</span><span class="eyebrow">Toolkit</span></div>
+      <h2>Skills &amp; technologies</h2>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-block reveal">
+        <h4>LLMs &amp; GenAI</h4>
+        <div class="tags"><span class="tag">LLM Applications</span><span class="tag">RAG</span><span class="tag">Prompt Engineering</span><span class="tag">Multi-Agent Systems</span><span class="tag">Text-to-SQL</span><span class="tag">LangChain</span><span class="tag">OpenAI API</span><span class="tag">GPT-4</span><span class="tag">LLaMA 3.1</span><span class="tag">DeepSeek-R1</span></div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Machine Learning &amp; Stats</h4>
+        <div class="tags"><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">NLP</span><span class="tag">Time Series</span><span class="tag">PCA / MCA</span><span class="tag">Clustering</span><span class="tag">XGBoost</span><span class="tag">Monte Carlo</span><span class="tag">scikit-learn</span></div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Languages &amp; Frameworks</h4>
+        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">asyncio</span><span class="tag">Flask</span><span class="tag">Streamlit</span><span class="tag">R</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">C</span></div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Data &amp; Libraries</h4>
+        <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span><span class="tag">OpenCV</span><span class="tag">BeautifulSoup</span><span class="tag">Web Scraping</span><span class="tag">Data Visualization</span><span class="tag">Power BI</span></div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Databases &amp; Vector Stores</h4>
+        <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Supabase</span><span class="tag">Chroma</span><span class="tag">Qdrant</span><span class="tag">Vector Databases</span></div>
+      </div>
+      <div class="skill-block reveal">
+        <h4>Cloud, DevOps &amp; Tools</h4>
+        <div class="tags"><span class="tag">Oracle Cloud (OCI)</span><span class="tag">OCI Document Understanding</span><span class="tag">OCI Generative AI</span><span class="tag">OCI Integration</span><span class="tag">Oracle APEX</span><span class="tag">Oracle Database 26ai</span><span class="tag">Docker</span><span class="tag">Linux / shell (entry level)</span><span class="tag">Git</span><span class="tag">Jupyter</span><span class="tag">LaTeX</span><span class="tag">Agile / Scrum</span></div>
+      </div>
+    </div>
+    <p class="muted reveal" style="margin-top:20px;font-size:.92rem"><strong style="color:var(--ink)">Languages spoken:</strong> Arabic (native), French (fluent), English (professional)</p>
+  </div>
+</section>
+
+<!-- BEYOND -->
+<section id="beyond" class="alt-bg">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="top"><span class="secnum">04</span><span class="eyebrow">Beyond the code</span></div>
+      <h2>What drives me</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>The thread through everything I do is building things people actually use. That is as true for a production AI system as it is for a student event with a room full of people counting on it.</p>
+        <p>The habit started before the code. At fifteen I was volunteering with kids who needed someone in their corner, and that grew into organizing events, co-founding a startup, and teaching. AI came later, and it stuck because it is the sharpest tool I have found for the same goal: take something painful and make it work for real people.</p>
+        <p>These days I split my time between shipping AI and helping run the communities I care about, and I have had the chance to represent my <strong>university</strong> and my <strong>country</strong> along the way. When I log off, I am usually watching Barça or arguing with my own World Cup model.</p>
+      </div>
+      <div class="about-photo reveal">
+        <img src="assets/hero-trophy.jpg" alt="Mohamed Ali Aoun lifting a trophy, draped in the Tunisian flag" />
+      </div>
+    </div>
+
+    <div class="inv-title reveal">Leadership &amp; community</div>
+    <div class="inv">
+      <div class="inv-row reveal">
+        <img class="inv-thumb" src="assets/forum-sesame.jpg" alt="Croki team">
+        <div class="inv-body">
+          <h4>Croki <span class="date">2023 – 2025</span></h4>
+          <div class="role">Co-founder · Operations &amp; Events</div>
+          <p>Co-founded Croki and ran operations end to end: managing sessions, recruiting professors, owning content, scheduling, logistics and marketing. Flagship initiatives (Bac to the Future, Orientour) reached 650+ students.</p>
+        </div>
+      </div>
+      <div class="inv-row reveal">
+        <img class="inv-thumb" src="assets/enactus-team.jpg" alt="Enactus team">
+        <div class="inv-body">
+          <h4>Enactus ISI <span class="date">2021 – 2023</span></h4>
+          <div class="role">Finance &amp; Events Lead · Pitching Lead</div>
+          <p>Led Career Rock-IT (500+ attendees, 50+ members) and pitched at national and world competitions with podium placements.</p>
+        </div>
+      </div>
+      <div class="inv-row reveal">
+        <img class="inv-thumb" src="assets/donbosco.jpg" alt="Don Bosco youth exchange">
+        <div class="inv-body">
+          <h4>Don Bosco, Manouba &amp; Tunis <span class="date">2017 – 2020</span></h4>
+          <div class="role">Volunteer Youth Animator</div>
+          <p>Ran cultural, sport and educational events for underserved youth (starting at fifteen) and managed Tunisia-Italy exchange programs.</p>
+        </div>
+      </div>
+      <div class="inv-row reveal">
+        <!-- Drop your FITT/Ambassadors photo at assets/fitt.jpg and it will replace this placeholder automatically. -->
+        <img class="inv-thumb" src="assets/fitt.jpg" alt="FITT Timișoara" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="inv-thumb ph-mini" style="display:none"><span>soon</span></div>
+        <div class="inv-body">
+          <h4>FITT Timișoara &amp; Dauphine Ambassadors <span class="date">2025 – Present</span></h4>
+          <div class="role">Volunteer · Ambassador</div>
+          <p>Ran operations for an EU-funded international youth festival in Romania, and represent Dauphine at academic events.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="inv-title reveal" style="margin-top:34px">Teaching &amp; speaking</div>
+    <div class="speak">
+      <div class="speak-card reveal">
+        <div class="imgwrap">
+          <!-- Drop your Opus Lab photo at assets/opus-lab.jpg and it will replace this placeholder automatically. -->
+          <img src="assets/opus-lab.jpg" alt="Opus Lab AI bootcamp" onerror="this.style.display='none';this.parentElement.querySelector('.ph').style.display='flex';">
+          <div class="ph" style="display:none"><div class="mono-monogram" style="font-size:2rem">MA</div><div class="note">photo coming soon</div></div>
+        </div>
+        <div class="body"><span class="ctx">Opus Lab · Instructor</span><h4>AI Dev Bootcamp</h4><p>Taught teens with no coding background to build their first chatbot and first agent.</p></div>
+      </div>
+      <div class="speak-card reveal">
+        <div class="imgwrap"><img src="assets/teaching-prompt.jpg" alt="Prompt engineering session"></div>
+        <div class="body"><span class="ctx">Hackathon · Speaker</span><h4>Prompt Engineering Session</h4><p>A hands-on session for participants brand new to the domain.</p></div>
+      </div>
+      <div class="speak-card reveal">
+        <div class="imgwrap"><img src="assets/croki-bac.jpg" alt="Entrepreneurship talk"></div>
+        <div class="body"><span class="ctx">Dauphine · Speaker</span><h4>Entrepreneurship Talk</h4><p>Shared the Croki journey and the real work behind a startup.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <h2>Let's build something.</h2>
+      <p>I am looking for an end-of-studies internship in AI engineering, and always up for a good conversation about AI, startups, or football.</p>
+      <div class="contact-links">
+        <a class="clink solid" href="mailto:mohamed-ali.aoun@dauphine.eu">
+          <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/mohamed-ali-aoun" target="_blank" rel="noopener">
+          <svg class="i" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6h-4v-10h4v1.5A4 4 0 0116 8zM6 9H2v11h4zM4 3a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          LinkedIn
+        </a>
+        <!-- TODO: replace the href below with your GitHub URL once your profile is ready -->
+        <a class="clink" href="https://github.com/" target="_blank" rel="noopener">
+          <svg class="i" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a class="clink" href="assets/Mohamed_Ali_Aoun_CV.pdf" download>
+          <svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">© <span id="yr"></span> Mohamed Ali Aoun · built in Tunis</div></footer>
+
+<!-- ===== CHAT WIDGET ===== -->
+<button id="chatFab" aria-label="Ask about Dali">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+  Ask about me
+</button>
+<div id="chatPanel" role="dialog" aria-label="Chat with Dali's assistant">
+  <div class="chat-head">
+    <div class="av">MA</div>
+    <div><div class="t">Ask about Dali</div><div class="s">AI assistant</div></div>
+    <button class="x" id="chatClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-foot">
+    <input id="chatInput" type="text" placeholder="Ask me anything about Dali..." autocomplete="off" />
+    <button id="chatSend" aria-label="Send">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+  <div class="chat-note">AI assistant, grounded on Dali's real work. It can occasionally be wrong.</div>
+</div>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>10)});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const root=document.documentElement, tb=document.getElementById('themeBtn');
+let stored=null; try{stored=localStorage.getItem('theme')}catch(e){}
+if(stored) root.setAttribute('data-theme',stored);
+function sysDark(){return matchMedia('(prefers-color-scheme: dark)').matches}
+tb.addEventListener('click',()=>{
+  const cur=root.getAttribute('data-theme')||(sysDark()?'dark':'light');
+  const next=cur==='dark'?'light':'dark';
+  root.setAttribute('data-theme',next);
+  try{localStorage.setItem('theme',next)}catch(e){}
+});
+
+/* ===== CHAT WIDGET LOGIC ===== */
+(function(){
+  const fab=document.getElementById('chatFab'), panel=document.getElementById('chatPanel'),
+        closeB=document.getElementById('chatClose'), body=document.getElementById('chatBody'),
+        input=document.getElementById('chatInput'), send=document.getElementById('chatSend');
+  const history=[]; let greeted=false, busy=false;
+  const SUGGESTIONS=["What has Dali built?","Does he know FastAPI?","Tell me about LAWAI","What is he looking for?"];
+
+  function bubble(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}
+  function chips(){const c=document.createElement('div');c.className='chat-chips';SUGGESTIONS.forEach(q=>{const b=document.createElement('button');b.className='chat-chip';b.textContent=q;b.onclick=()=>{c.remove();ask(q);};c.appendChild(b);});body.appendChild(c);body.scrollTop=body.scrollHeight;}
+  function typing(){const d=document.createElement('div');d.className='msg bot typing';d.innerHTML='<span></span><span></span><span></span>';body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}
+
+  function open(){panel.classList.add('open');fab.style.display='none';if(!greeted){greeted=true;bubble("Hi! I'm Dali's assistant. Ask me anything about his experience, projects or skills.",'bot');chips();}setTimeout(()=>input.focus(),50);}
+  function close(){panel.classList.remove('open');fab.style.display='inline-flex';}
+  fab.onclick=open; closeB.onclick=close;
+
+  async function ask(text){
+    text=(text||'').trim(); if(!text||busy) return;
+    busy=true; send.disabled=true;
+    bubble(text,'user'); history.push({role:'user',content:text}); input.value='';
+    const t=typing();
+    try{
+      const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});
+      const data=await r.json(); t.remove();
+      const reply=(data&&data.reply)||"Sorry, something went wrong. You can email Dali at mohamed-ali.aoun@dauphine.eu.";
+      bubble(reply,'bot'); history.push({role:'assistant',content:reply});
+    }catch(e){
+      t.remove();
+      bubble("I can't reach the assistant from here. This chat works on the live site once it's deployed. In the meantime, email Dali at mohamed-ali.aoun@dauphine.eu.",'bot');
+    }
+    busy=false; send.disabled=false; input.focus();
+  }
+  send.onclick=()=>ask(input.value);
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')ask(input.value);});
+})();
+</script>
+</body>
+</html>
