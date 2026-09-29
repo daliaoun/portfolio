@@ -3,14 +3,20 @@
 // The API key is read from the environment variable GROQ_API_KEY (set it in Vercel, never in this file).
 //
 // To switch to Mistral instead of Groq:
-//   - API_URL  -> 'https://api.mistral.ai/v1/chat/completions'
-//   - MODEL    -> 'mistral-small-latest'
-//   - env var  -> use MISTRAL_API_KEY (and update process.env below)
+//   - API_URL -> 'https://api.mistral.ai/v1/chat/completions'
+//   - MODELS  -> ['mistral-small-latest']
+//   - use process.env.MISTRAL_API_KEY below and name the Vercel variable MISTRAL_API_KEY.
 
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.3-70b-versatile'; // Groq free model. If this name ever errors, try 'llama-3.1-8b-instant'.
+// The function tries these in order until one works, so a retired model name does not break the bot.
+const MODELS = [
+  'llama-3.3-70b-versatile',
+  'llama-3.1-8b-instant',
+  'llama-3.1-70b-versatile',
+  'llama3-70b-8192',
+  'gemma2-9b-it'
+];
 
-// --- Grounding: everything the assistant is allowed to know about Dali ---
 const DALI_CONTEXT = `
 IDENTITY
 - Full name: Mohamed Ali Aoun. Goes by Dali. Based in Tunis, Tunisia.
@@ -39,7 +45,7 @@ PROJECTS AND THEIR STACKS
 - Call-Center Analytics Tool (UmanLink): full-stack, Python back-end and Flask interface, automated pipelines for cleaning, processing and visualizing data. Pandas, NumPy, Matplotlib, Plotly, Git. Saved 40+ hours a month.
 - Orientalent (UmanLink): intelligent recruitment platform, OCR and RAG-based candidate matching from natural-language job descriptions. Python, FastAPI, LangChain, RAG, DeepSeek-R1, OpenCV, MongoDB, Angular, Git.
 - E-commerce Chatbot (UmanLink): multi-agent assistant for product search, order tracking and FAQ over a vector database and RAG. Python, LangChain, GPT-4, Text-to-SQL, Chroma, Streamlit, Git.
-- AI Swimming Assistant (Esperance Sportive de Tunis): full-stack AI chatbot for the EST swimming team, session, progress and nutrition tracking with personalized programs, plus a search engine over 38,000+ historical competition records. LLaMA 3.1, LangChain, RAG, Text-to-SQL, Streamlit, Web Scraping, Agile. Built in Agile, Git.
+- AI Swimming Assistant (Esperance Sportive de Tunis): full-stack AI chatbot for the EST swimming team, session, progress and nutrition tracking with personalized programs, plus a search engine over 38,000+ historical competition records. LLaMA 3.1, LangChain, RAG, Text-to-SQL, Streamlit, Web Scraping, Agile, Git.
 - Seam Carving (academic, graph theory): content-aware image resizing with graph modeling (DAG) and dynamic programming. Python.
 - Social-Media Perception Study (academic, data analysis): questionnaire design to statistics, preprocessing, PCA (ACP), MCA (ACM) and clustering. R.
 - SEO Report Automation (Medianet): analysis, dashboards and AI-generated summaries. Python, NLP, GPT-3.5, BeautifulSoup, Web Scraping, Power BI.
@@ -74,7 +80,6 @@ Rules:
 CONTEXT:
 ${DALI_CONTEXT}`;
 
-// --- soft, best-effort rate limiting (free-tier key means no billing risk anyway) ---
 const RATE = new Map();
 const WINDOW_MS = 60 * 1000;
 const MAX_PER_WINDOW = 12;
@@ -85,7 +90,7 @@ module.exports = async (req, res) => {
     return;
   }
   if (!process.env.GROQ_API_KEY) {
-    res.status(200).json({ reply: "The assistant is not configured yet: the site owner still needs to add the GROQ_API_KEY environment variable in Vercel." });
+    res.status(200).json({ reply: "The assistant is not configured yet: the site owner still needs to add the GROQ_API_KEY environment variable in Vercel, then redeploy." });
     return;
   }
 
@@ -102,40 +107,52 @@ module.exports = async (req, res) => {
     RATE.set(ip, { count: 1, ts: now });
   }
 
+  let messages = [];
   try {
     const body = req.body || {};
-    let messages = Array.isArray(body.messages) ? body.messages : [];
-    messages = messages
+    messages = (Array.isArray(body.messages) ? body.messages : [])
       .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
       .slice(-8)
       .map(m => ({ role: m.role, content: m.content.slice(0, 1000) }));
-
-    const payload = {
-      model: MODEL,
-      temperature: 0.4,
-      max_tokens: 400,
-      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
-    };
-
-    const r = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!r.ok) {
-      res.status(200).json({ reply: "Sorry, I could not reach the AI service just now. You can always email Dali at mohamed-ali.aoun@dauphine.eu." });
-      return;
-    }
-
-    const data = await r.json();
-    const reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim()
-      || "I'm not sure about that one. Feel free to email Dali at mohamed-ali.aoun@dauphine.eu.";
-    res.status(200).json({ reply });
   } catch (e) {
-    res.status(200).json({ reply: "Something went wrong on my side. Please try again in a moment, or email Dali at mohamed-ali.aoun@dauphine.eu." });
+    messages = [];
   }
+
+  let lastError = 'unknown error';
+  for (const model of MODELS) {
+    try {
+      const r = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model,
+          temperature: 0.4,
+          max_tokens: 400,
+          messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages]
+        })
+      });
+
+      if (r.ok) {
+        const data = await r.json();
+        const reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content || '').trim()
+          || "I'm not sure about that one. Feel free to email Dali at mohamed-ali.aoun@dauphine.eu.";
+        res.status(200).json({ reply });
+        return;
+      }
+
+      let detail = '';
+      try { detail = await r.text(); } catch (e) {}
+      lastError = `HTTP ${r.status} on "${model}": ${detail.slice(0, 200)}`;
+      // Auth errors will fail on every model, so stop early.
+      if (r.status === 401 || r.status === 403) break;
+    } catch (e) {
+      lastError = String(e && e.message ? e.message : e).slice(0, 200);
+    }
+  }
+
+  // Temporary debug: shows the real reason in the chat so it can be fixed, then reverted to a clean message.
+  res.status(200).json({ reply: `I could not get an answer from the AI provider. Debug info (share this with whoever set up the site): ${lastError}` });
 };
