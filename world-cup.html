@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>World Cup 2026 Predictor</title>
+<meta name="description" content="Interactive match predictor powered by Mohamed Ali Aoun's Dixon-Coles and Poisson World Cup 2026 model."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5EC;--bg-alt:#ECEBDB;--surface:#FCFCF6;--border:#DCDCC5;
+  --ink:#222417;--ink-soft:#565941;--ink-faint:#8B8C73;
+  --accent:#5E6E2A;--accent-deep:#465220;--accent-2:#A9903A;--accent-soft:#E7E8CF;
+  --win:#5E6E2A;--draw:#B9B48C;--lose:#8A6D3B;
+  --shadow:0 1px 2px rgba(50,55,20,.05),0 10px 30px rgba(60,70,20,.08);
+  --disp:"Space Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",monospace;--sans:"Inter",system-ui,sans-serif;
+}
+:root[data-theme="dark"]{--bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;--ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;--accent:#A6BA5C;--accent-deep:#8CA347;--accent-soft:#2C3120;--win:#A6BA5C;--draw:#6f6b4c;--lose:#C7A35A;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;--ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;--accent:#A6BA5C;--accent-deep:#8CA347;--accent-soft:#2C3120;--win:#A6BA5C;--draw:#6f6b4c;--lose:#C7A35A;}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:30px 20px 50px}
+h1{font-family:var(--disp);font-size:clamp(1.7rem,4.5vw,2.4rem);letter-spacing:-.02em;margin:0 0 6px}
+.sub{font-family:var(--mono);font-size:.78rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+.lede{color:var(--ink-soft);font-size:.98rem;margin:10px 0 26px;max-width:60ch}
+.pickrow{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:10px}
+.pick{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px}
+.pick label{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+select{width:100%;margin-top:6px;border:1px solid var(--border);background:var(--bg);color:var(--ink);border-radius:9px;padding:10px;font-family:var(--sans);font-size:1rem;font-weight:600;outline:none;cursor:pointer}
+select:focus{border-color:var(--accent)}
+.vs{font-family:var(--disp);font-weight:700;color:var(--accent-2);font-size:1.1rem}
+.opts{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:4px 0 22px;font-size:.85rem;color:var(--ink-soft)}
+.opts label{display:inline-flex;gap:7px;align-items:center;cursor:pointer;font-family:var(--mono);font-size:.74rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+.names{display:flex;justify-content:space-between;align-items:center;font-family:var(--disp);font-weight:600;margin-bottom:12px;gap:8px}
+.names .t{display:flex;align-items:center;gap:9px;font-size:1.05rem}
+.names .fl{font-size:1.5rem;line-height:1}
+.bar{display:flex;height:40px;border-radius:9px;overflow:hidden;border:1px solid var(--border)}
+.seg{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:.82rem;font-weight:600;min-width:0;transition:flex-basis .5s cubic-bezier(.2,.7,.2,1)}
+.seg.w{background:var(--win)}.seg.d{background:var(--draw);color:#2a2a1a}.seg.l{background:var(--lose)}
+.barlbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);margin-top:7px;text-transform:uppercase;letter-spacing:.05em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.stat{background:var(--bg-alt);border:1px solid var(--border);border-radius:11px;padding:14px;text-align:center}
+.stat .k{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.stat .v{font-family:var(--disp);font-weight:700;font-size:1.5rem;margin-top:3px}
+.scores{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.srow{display:flex;align-items:center;gap:10px;font-size:.9rem}
+.srow .sc{font-family:var(--mono);font-weight:600;width:52px}
+.srow .track{flex:1;height:8px;background:var(--bg-alt);border-radius:4px;overflow:hidden}
+.srow .fill{height:100%;background:var(--accent)}
+.srow .pc{font-family:var(--mono);font-size:.76rem;color:var(--ink-soft);width:48px;text-align:right}
+.simbtn{width:100%;margin-top:4px;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:13px;font-family:var(--sans);font-weight:600;font-size:.95rem;cursor:pointer;transition:transform .15s,box-shadow .2s}
+.simbtn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.simout{margin-top:14px;text-align:center;font-family:var(--disp);font-weight:700;font-size:1.8rem;min-height:1.2em}
+.simnote{text-align:center;font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);margin-top:2px}
+.foot{font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);margin-top:18px;line-height:1.7}
+.foot b{color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.76rem;color:var(--accent);margin-bottom:16px">&larr; Back to portfolio</a>
+  <div class="sub">Dixon-Coles + Poisson</div>
+  <h1>World Cup 2026 Predictor</h1>
+  <p class="lede">Pick two national teams and see what my model gives them: win, draw and loss probabilities, expected goals, the most likely scorelines, and a one-click match simulation. The numbers come from a Dixon-Coles attack and defence model I fit on eight years of international results.</p>
+
+  <div class="pickrow">
+    <div class="pick"><label>Team A</label><select id="teamA"></select></div>
+    <div class="vs">vs</div>
+    <div class="pick"><label>Team B</label><select id="teamB"></select></div>
+  </div>
+  <div class="opts">
+    <label><input type="checkbox" id="homeA"> Team A plays at home</label>
+    <label><input type="checkbox" id="knockout" checked> Knockout match (resolve draws)</label>
+  </div>
+
+  <div class="card">
+    <div class="names">
+      <div class="t"><span class="fl" id="flA"></span><span id="nmA"></span></div>
+      <div class="t" style="color:var(--ink-faint);font-family:var(--mono);font-size:.7rem">90 minutes</div>
+      <div class="t"><span id="nmB"></span><span class="fl" id="flB"></span></div>
+    </div>
+    <div class="bar">
+      <div class="seg w" id="segW"></div><div class="seg d" id="segD"></div><div class="seg l" id="segL"></div>
+    </div>
+    <div class="barlbl"><span id="lblW"></span><span>draw</span><span id="lblL"></span></div>
+    <div id="koLine" class="barlbl" style="margin-top:10px;color:var(--accent)"></div>
+  </div>
+
+  <div class="card">
+    <div class="grid2">
+      <div class="stat"><div class="k">Expected goals</div><div class="v" id="xg">-</div></div>
+      <div class="stat"><div class="k">Most likely score</div><div class="v" id="mls">-</div></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin:18px 0 8px">Most likely scorelines</div>
+    <div class="scores" id="scores"></div>
+  </div>
+
+  <div class="card">
+    <button class="simbtn" id="sim">Simulate the match</button>
+    <div class="simout" id="simout"></div>
+    <div class="simnote" id="simnote"></div>
+  </div>
+
+  <div class="foot">
+    <b>How it works:</b> expected goals &lambda; = exp(&mu; + attack&#8201;A &minus; defence&#8201;B [+ home]) for each side, then a Poisson scoreline grid with the Dixon-Coles low-score correction (&rho;). Draws in knockout mode are resolved with an Elo-based shootout probability.<br>
+    <b>Model:</b> fit on 8 years of men's internationals as of June 2026. Ratings are my own Dixon-Coles attack and defence estimates. Built by Mohamed Ali Aoun.
+  </div>
+</div>
+
+<script>
+const M = {"mu":0.11592,"gamma":0.22721,"rho":-0.07724,"maxGoals":8,"asOf":"2026-06-01","teams":{"Spain":{"a":1.4882,"d":1.3467,"elo":2208,"net":4.681},"Germany":{"a":1.3443,"d":1.0023,"elo":2013,"net":3.895},"Colombia":{"a":1.3069,"d":1.1032,"elo":2066,"net":3.776},"Portugal":{"a":1.2966,"d":1.112,"elo":2011,"net":3.737},"Brazil":{"a":1.2911,"d":1.1718,"elo":2042,"net":3.736},"Argentina":{"a":1.2461,"d":1.6748,"elo":2159,"net":3.694},"Netherlands":{"a":1.2767,"d":1.0629,"elo":2031,"net":3.637},"Norway":{"a":1.2771,"d":0.9564,"elo":1969,"net":3.595},"France":{"a":1.2401,"d":1.2339,"elo":2119,"net":3.554},"England":{"a":1.1916,"d":1.4404,"elo":2079,"net":3.431},"Switzerland":{"a":1.1666,"d":0.9598,"elo":1942,"net":3.176},"Denmark":{"a":1.0761,"d":1.0967,"elo":1932,"net":2.919},"Japan":{"a":1.0612,"d":1.2038,"elo":1993,"net":2.908},"Belgium":{"a":1.0872,"d":0.9166,"elo":1920,"net":2.881},"Croatia":{"a":1.0153,"d":1.0319,"elo":1985,"net":2.699},"Italy":{"a":1.0297,"d":0.8705,"elo":1924,"net":2.674},"Turkey":{"a":1.0334,"d":0.7476,"elo":1938,"net":2.624},"Senegal":{"a":0.9817,"d":0.9917,"elo":1915,"net":2.581},"Morocco":{"a":0.9136,"d":1.5626,"elo":1991,"net":2.565},"Austria":{"a":0.9335,"d":0.9838,"elo":1879,"net":2.436},"Sweden":{"a":0.9829,"d":0.5545,"elo":1757,"net":2.356},"Algeria":{"a":0.9038,"d":0.8242,"elo":1825,"net":2.28},"Uruguay":{"a":0.8232,"d":1.3231,"elo":1965,"net":2.259},"Greece":{"a":0.8698,"d":0.8925,"elo":1810,"net":2.22},"Australia":{"a":0.8201,"d":1.0316,"elo":1916,"net":2.15},"Nigeria":{"a":0.8477,"d":0.8586,"elo":1848,"net":2.145},"Scotland":{"a":0.8464,"d":0.7771,"elo":1828,"net":2.101},"Iran":{"a":0.8349,"d":0.8014,"elo":1881,"net":2.084},"Ukraine":{"a":0.8647,"d":0.5879,"elo":1809,"net":2.042},"South Korea":{"a":0.8314,"d":0.7187,"elo":1861,"net":2.032},"Ecuador":{"a":0.6985,"d":1.5402,"elo":2008,"net":2.017},"Mexico":{"a":0.7269,"d":1.0531,"elo":1958,"net":1.931},"Venezuela":{"a":0.807,"d":0.6489,"elo":1804,"net":1.93},"Poland":{"a":0.8062,"d":0.6084,"elo":1788,"net":1.904},"Canada":{"a":0.7339,"d":0.8781,"elo":1899,"net":1.873},"Russia":{"a":0.7269,"d":0.9087,"elo":1840,"net":1.87},"Paraguay":{"a":0.6885,"d":1.0567,"elo":1911,"net":1.845},"United States":{"a":0.7728,"d":0.6444,"elo":1845,"net":1.842},"Czech Republic":{"a":0.758,"d":0.6766,"elo":1783,"net":1.825},"Georgia":{"a":0.7468,"d":0.5848,"elo":1702,"net":1.744},"Kosovo":{"a":0.6878,"d":0.774,"elo":1780,"net":1.716},"Chile":{"a":0.7033,"d":0.6742,"elo":1815,"net":1.697},"Ivory Coast":{"a":0.6259,"d":0.9245,"elo":1775,"net":1.654},"Serbia":{"a":0.6454,"d":0.8012,"elo":1828,"net":1.637},"Jordan":{"a":0.7344,"d":0.452,"elo":1781,"net":1.626},"Wales":{"a":0.6552,"d":0.6516,"elo":1766,"net":1.577},"Iceland":{"a":0.7361,"d":0.3576,"elo":1625,"net":1.559},"Hungary":{"a":0.6206,"d":0.7022,"elo":1763,"net":1.532},"Tunisia":{"a":0.5626,"d":0.8785,"elo":1736,"net":1.505},"Romania":{"a":0.6059,"d":0.6922,"elo":1697,"net":1.496},"Burkina Faso":{"a":0.6581,"d":0.4438,"elo":1655,"net":1.448},"Uzbekistan":{"a":0.5001,"d":1.0036,"elo":1842,"net":1.44},"Egypt":{"a":0.5039,"d":0.9709,"elo":1771,"net":1.433},"Slovakia":{"a":0.5666,"d":0.6854,"elo":1744,"net":1.413},"Mali":{"a":0.4574,"d":1.1233,"elo":1713,"net":1.409},"DR Congo":{"a":0.4177,"d":1.1331,"elo":1767,"net":1.343},"Republic of Ireland":{"a":0.482,"d":0.7789,"elo":1750,"net":1.303}},"iso":{"Spain":"ES","Germany":"DE","Colombia":"CO","Portugal":"PT","Brazil":"BR","Argentina":"AR","Netherlands":"NL","Norway":"NO","France":"FR","England":"ENG","Switzerland":"CH","Denmark":"DK","Japan":"JP","Belgium":"BE","Croatia":"HR","Italy":"IT","Turkey":"TR","Senegal":"SN","Morocco":"MA","Austria":"AT","Sweden":"SE","Algeria":"DZ","Uruguay":"UY","Greece":"GR","Australia":"AU","Nigeria":"NG","Scotland":"SCT","Iran":"IR","Ukraine":"UA","South Korea":"KR","Ecuador":"EC","Mexico":"MX","Venezuela":"VE","Poland":"PL","Canada":"CA","Russia":"RU","Paraguay":"PY","United States":"US","Czech Republic":"CZ","Georgia":"GE","Kosovo":"XK","Chile":"CL","Ivory Coast":"CI","Serbia":"RS","Jordan":"JO","Wales":"WLS","Iceland":"IS","Hungary":"HU","Tunisia":"TN","Romania":"RO","Burkina Faso":"BF","Uzbekistan":"UZ","Egypt":"EG","Slovakia":"SK","Mali":"ML","DR Congo":"CD","Republic of Ireland":"IE"}};
+const T = M.teams, ISO = M.iso, MU=M.mu, GAM=M.gamma, RHO=M.rho, MAXG=M.maxGoals;
+const names = Object.keys(T).sort();
+
+function flag(iso){
+  if(iso==='ENG') return '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
+  if(iso==='SCT') return '🏴󠁧󠁢󠁳󠁣󠁴󠁿';
+  if(iso==='WLS') return '🏴󠁧󠁢󠁷󠁬󠁳󠁿';
+  if(!iso||iso.length!==2) return '⚽';
+  return String.fromCodePoint(...[...iso.toUpperCase()].map(c=>0x1F1E6+c.charCodeAt(0)-65));
+}
+// factorials for Poisson
+const F=[1];for(let i=1;i<=MAXG+1;i++)F[i]=F[i-1]*i;
+function pois(k,l){return Math.exp(-l)*Math.pow(l,k)/F[k];}
+function rates(a,b,homeA){
+  const lam=Math.exp(MU + T[a].a - T[b].d + (homeA?GAM:0));
+  const kap=Math.exp(MU + T[b].a - T[a].d);
+  return [lam,kap];
+}
+function matrix(a,b,homeA){
+  const [lam,kap]=rates(a,b,homeA);
+  const gx=[],gy=[];for(let i=0;i<=MAXG;i++){gx.push(pois(i,lam));gy.push(pois(i,kap));}
+  const Mm=[];for(let x=0;x<=MAXG;x++){Mm.push([]);for(let y=0;y<=MAXG;y++)Mm[x].push(gx[x]*gy[y]);}
+  Mm[0][0]*=1-lam*kap*RHO; Mm[0][1]*=1+lam*RHO; Mm[1][0]*=1+kap*RHO; Mm[1][1]*=1-RHO;
+  let s=0;for(let x=0;x<=MAXG;x++)for(let y=0;y<=MAXG;y++){if(Mm[x][y]<0)Mm[x][y]=0;s+=Mm[x][y];}
+  for(let x=0;x<=MAXG;x++)for(let y=0;y<=MAXG;y++)Mm[x][y]/=s;
+  return {Mm,lam,kap};
+}
+function analyze(a,b,homeA){
+  const {Mm,lam,kap}=matrix(a,b,homeA);
+  let w=0,d=0,l=0,best=null,bestp=-1,list=[];
+  for(let x=0;x<=MAXG;x++)for(let y=0;y<=MAXG;y++){
+    const p=Mm[x][y];
+    if(x>y)w+=p;else if(x===y)d+=p;else l+=p;
+    list.push([x,y,p]);
+    if(p>bestp){bestp=p;best=[x,y];}
+  }
+  list.sort((u,v)=>v[2]-u[2]);
+  return {w,d,l,lam,kap,best,top:list.slice(0,5),Mm};
+}
+function elShoot(a,b){ // elo-based shootout win prob for A
+  return 1/(1+Math.pow(10,-((T[a].elo-T[b].elo)/400)));
+}
+
+let curA, curB;
+function render(){
+  const a=document.getElementById('teamA').value, b=document.getElementById('teamB').value;
+  curA=a;curB=b;
+  const homeA=document.getElementById('homeA').checked;
+  const ko=document.getElementById('knockout').checked;
+  document.getElementById('flA').textContent=flag(ISO[a]);
+  document.getElementById('flB').textContent=flag(ISO[b]);
+  document.getElementById('nmA').textContent=a;
+  document.getElementById('nmB').textContent=b;
+  if(a===b){document.getElementById('segW').style.flexBasis='100%';return;}
+  const R=analyze(a,b,homeA);
+  const pct=x=>Math.round(x*100);
+  document.getElementById('segW').style.flexBasis=(R.w*100)+'%';
+  document.getElementById('segD').style.flexBasis=(R.d*100)+'%';
+  document.getElementById('segL').style.flexBasis=(R.l*100)+'%';
+  document.getElementById('segW').textContent=R.w>0.08?pct(R.w)+'%':'';
+  document.getElementById('segD').textContent=R.d>0.08?pct(R.d)+'%':'';
+  document.getElementById('segL').textContent=R.l>0.08?pct(R.l)+'%':'';
+  document.getElementById('lblW').textContent=a+' win';
+  document.getElementById('lblL').textContent=b+' win';
+  document.getElementById('xg').textContent=R.lam.toFixed(2)+' - '+R.kap.toFixed(2);
+  document.getElementById('mls').textContent=R.best[0]+' - '+R.best[1];
+  // top scores
+  const sc=document.getElementById('scores');sc.innerHTML='';
+  const mx=R.top[0][2];
+  R.top.forEach(([x,y,p])=>{
+    const row=document.createElement('div');row.className='srow';
+    row.innerHTML='<span class="sc">'+x+' - '+y+'</span><span class="track"><span class="fill" style="width:'+(p/mx*100)+'%"></span></span><span class="pc">'+(p*100).toFixed(1)+'%</span>';
+    sc.appendChild(row);
+  });
+  // knockout line
+  const ko2=document.getElementById('koLine');
+  if(ko){
+    const so=elShoot(a,b);
+    const kA=R.w+R.d*so, kB=R.l+R.d*(1-so);
+    ko2.textContent='Knockout (draws resolved): '+a+' '+pct(kA)+'%  /  '+b+' '+pct(kB)+'%';
+  } else ko2.textContent='';
+  document.getElementById('simout').textContent='';
+  document.getElementById('simnote').textContent='';
+}
+function simulate(){
+  const a=curA,b=curB,homeA=document.getElementById('homeA').checked,ko=document.getElementById('knockout').checked;
+  if(a===b)return;
+  const {Mm}=matrix(a,b,homeA);
+  let r=Math.random(),cx=0,X=0,Y=0,done=false;
+  for(let x=0;x<=MAXG&&!done;x++)for(let y=0;y<=MAXG&&!done;y++){cx+=Mm[x][y];if(r<=cx){X=x;Y=y;done=true;}}
+  let note='Full time';
+  let out=flag(ISO[a])+' '+X+' - '+Y+' '+flag(ISO[b]);
+  if(ko && X===Y){
+    const so=elShoot(a,b); const aWins=Math.random()<so;
+    note='Draw after 90, decided on penalties';
+    out+='  ('+(aWins?a:b)+' win pens)';
+  }
+  document.getElementById('simout').textContent=out;
+  document.getElementById('simnote').textContent=note;
+}
+// build selects
+function fill(sel,def){names.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=flag(ISO[n])+'  '+n;if(n===def)o.selected=true;sel.appendChild(o);});}
+fill(document.getElementById('teamA'),'Brazil');
+fill(document.getElementById('teamB'),'Argentina');
+['teamA','teamB','homeA','knockout'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+document.getElementById('sim').addEventListener('click',simulate);
+render();
+</script>
+</body>
+</html>

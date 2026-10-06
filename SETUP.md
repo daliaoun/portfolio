@@ -49,6 +49,15 @@ Important: `index.html` has to sit at the root of the repo, with `assets/` and `
 
 If you deployed before adding the key, add it under **Settings > Environment Variables**, then go to **Deployments**, open the latest one, and choose **Redeploy** so the function picks up the key.
 
+### Optional settings (you can skip these)
+
+The chatbot works out of the box. If you want to tune it, add these environment variables the same way:
+
+- `CHAT_MAX_PER_MIN` , how many questions one visitor can ask per minute (default 15). Lower it if you want to be extra safe with the free tier.
+- `ALLOWED_ORIGIN` , lock the chatbot API to one website so nobody can call it from another site using your key. Set it to your final URL, for example `https://your-portfolio.vercel.app`. If you leave it empty, the function already blocks calls whose origin does not match your own site, so this is only needed if you use a custom domain and want to pin it.
+
+Quick way to check the function is alive without using any credits: open `https://your-site.vercel.app/api/chat` in a browser. You should see `{"ok":true,"configured":true}`. If `configured` is `false`, the key is not set yet.
+
 ---
 
 ## Part 4 (optional): Your own domain
@@ -61,12 +70,7 @@ In Vercel, open your project, go to **Settings > Domains**, and add a domain you
 
 Whenever you change a file (for example when you add your header photo at `assets/hero.jpg`), upload the new file to the GitHub repo. Vercel notices the change and redeploys automatically within a minute. No extra steps.
 
-Photos the site is waiting for (drop them into `assets/` with these exact names and they replace the placeholders automatically):
-- `assets/hero.jpg`  (your header photo)
-- `assets/opus-lab.jpg`  (the Opus Lab teaching photo)
-- `assets/fitt.jpg`  (the FITT / Ambassadors photo)
-
-Also remember to replace the GitHub link in the contact section of `index.html` (there is a `TODO` comment next to it) once your GitHub profile is ready.
+All the photos and the GitHub links are already in place. If you ever want to swap a photo, just upload a new file to `assets/` with the same name (for example `assets/hero.jpg` for the header, `assets/opus-lab.jpg` for the teaching photo, `assets/dauphine.jpg` for the ambassadors photo) and Vercel redeploys automatically.
 
 ---
 

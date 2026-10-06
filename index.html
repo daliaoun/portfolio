@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mohamed Ali Aoun · AI Engineer</title>
 <meta name="description" content="Mohamed Ali Aoun (Dali), AI engineer. I build LLM, RAG and multi-agent systems and take them from prototype to production. Projects, experience and contact." />
+<meta name="author" content="Mohamed Ali Aoun" />
+<meta name="theme-color" content="#5E6E2A" />
+<link rel="canonical" href="" />
+<!-- Social preview. After deploying, set og:url and og:image to your full URL (e.g. https://your-site.vercel.app/assets/og-image.jpg) for best results on LinkedIn. -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Mohamed Ali Aoun · AI Engineer" />
+<meta property="og:description" content="I build AI systems (LLM, RAG, multi-agent) and take them from prototype to production. Projects, experience, and a live assistant you can ask." />
+<meta property="og:image" content="assets/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Mohamed Ali Aoun · AI Engineer" />
+<meta name="twitter:description" content="I build AI systems (LLM, RAG, multi-agent) and take them from prototype to production." />
+<meta name="twitter:image" content="assets/og-image.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235E6E2A'/%3E%3Ctext x='32' y='44' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='700' fill='%23ffffff' text-anchor='middle'%3EMA%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -76,6 +92,8 @@ img{max-width:100%;display:block}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 .theme-btn{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--ink)}
 .theme-btn:hover{color:var(--accent);border-color:var(--accent)}
+.lang-btn{width:40px;height:40px;padding:0;justify-content:center;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--ink);font-family:var(--mono);font-weight:600;font-size:.74rem;letter-spacing:.02em}
+.lang-btn:hover{color:var(--accent);border-color:var(--accent)}
 
 /* HERO */
 .hero{padding:66px 0 58px}
@@ -91,7 +109,7 @@ img{max-width:100%;display:block}
 .fact .v{color:var(--ink-soft)}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
 .photoframe{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/4.4}
-.photoframe img{width:100%;height:100%;object-fit:cover}
+.photoframe img{width:100%;height:100%;object-fit:cover;object-position:center 28%}
 .ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
   background:linear-gradient(150deg,var(--accent-soft),var(--bg-alt));color:var(--accent-deep)}
 .ph .mono-monogram{font-family:var(--disp);font-weight:700;font-size:3.4rem;letter-spacing:-.03em;color:var(--accent)}
@@ -118,6 +136,17 @@ section{padding:66px 0;position:relative}
 .card p{font-size:.92rem;color:var(--ink-soft);margin:0 0 14px;flex:1}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);background:var(--bg-alt);border:1px solid var(--border);padding:3px 8px;border-radius:6px;font-weight:500}
+.playbtn{display:inline-flex;align-items:center;gap:7px;margin-top:14px;align-self:flex-start;background:var(--accent);color:#fff;font-family:var(--sans);font-weight:600;font-size:.82rem;padding:9px 15px;border-radius:999px;transition:transform .15s,box-shadow .2s}
+.playbtn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.playbtn svg{width:15px;height:15px}
+.card-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.card-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.71rem;font-weight:500;color:var(--accent);border:1px solid var(--border);padding:6px 11px;border-radius:999px;transition:border-color .2s,background .2s}
+.card-link:hover{border-color:var(--accent);background:var(--accent-soft)}
+.card-link svg{width:13px;height:13px}
+.card-link.locked{color:var(--ink-faint);cursor:default}
+.card-link.locked:hover{border-color:var(--border);background:transparent}
+.card-metric{font-family:var(--mono);font-size:.71rem;color:var(--ink);border-left:2px solid var(--accent);padding:3px 0 3px 10px;margin:0 0 13px;line-height:1.45}
+.card-metric strong{color:var(--accent);font-weight:600}
 
 /* EXPERIENCE timeline */
 .timeline{position:relative}
@@ -251,13 +280,14 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
   <div class="nav-in">
     <a href="#top" class="brand">dali<b>.aoun</b></a>
     <div class="nav-links">
-      <a href="#projects">projects</a>
-      <a href="#experience">experience</a>
-      <a href="#skills">skills</a>
-      <a href="#beyond">beyond</a>
-      <a href="#contact">contact</a>
+      <a href="#projects" data-fr="projets">projects</a>
+      <a href="#experience" data-fr="expérience">experience</a>
+      <a href="#skills" data-fr="compétences">skills</a>
+      <a href="#beyond" data-fr="au-delà">beyond</a>
+      <a href="#contact" data-fr="contact">contact</a>
     </div>
     <div class="nav-actions">
+      <button class="btn lang-btn" id="langBtn" aria-label="Passer en français" title="Français / English">FR</button>
       <button class="btn theme-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark">
         <svg class="i" viewBox="0 0 24 24"><path d="M12 3v1M12 20v1M4.2 4.2l.7.7M19.1 19.1l.7.7M3 12h1M20 12h1M4.2 19.8l.7-.7M19.1 4.9l.7-.7"/><circle cx="12" cy="12" r="4"/></svg>
       </button>
@@ -273,18 +303,18 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <header class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="reveal">
-      <span class="eyebrow">AI Engineer · Tunis</span>
+      <span class="eyebrow" data-fr="Ingénieur IA · Tunis">AI Engineer · Tunis</span>
       <h1>Mohamed Ali <span class="g">Aoun</span></h1>
-      <p class="lede">I build LLM, RAG and multi-agent systems, and take them from prototype to production.</p>
-      <p class="intro">Master's student in AI and Data Science, and a hands-on builder. I like problems that start messy and end in something people actually use. Friends call me Dali.</p>
+      <p class="lede" data-fr="Je conçois des systèmes d'IA et les mène du prototype à la production.">I build AI systems and take them from prototype to production.</p>
+      <p class="intro" data-fr="Étudiant en Master d'IA et Science des Données. Je travaille avec les LLM, le RAG et les systèmes multi-agents, en transformant des problèmes réels et complexes en outils réellement utilisés. Mes amis m'appellent Dali.">Master's student in AI and Data Science. I work with LLMs, RAG and multi-agent systems, turning messy, real-world problems into tools people actually use. Friends call me Dali.</p>
       <div class="facts mono">
-        <div class="fact"><span class="k">focus</span><span class="v">LLM apps · RAG · agent orchestration</span></div>
-        <div class="fact"><span class="k">studies</span><span class="v">MSc AI &amp; Data Science, Dauphine-PSL (top of class)</span></div>
-        <div class="fact"><span class="k">status</span><span class="v">open to an end-of-studies internship</span></div>
+        <div class="fact"><span class="k" data-fr="domaine">focus</span><span class="v" data-fr="Applis LLM · RAG · orchestration d'agents">LLM apps · RAG · agent orchestration</span></div>
+        <div class="fact"><span class="k" data-fr="études">studies</span><span class="v" data-fr="Master IA &amp; Science des Données, Dauphine-PSL (major de promotion)">MSc AI &amp; Data Science, Dauphine-PSL (top of class)</span></div>
+        <div class="fact"><span class="k" data-fr="statut">status</span><span class="v" data-fr="disponible pour un stage de fin d'études">open to an end-of-studies internship</span></div>
       </div>
       <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View projects</a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <a href="#projects" class="btn btn-primary" data-fr="Voir les projets">View projects</a>
+        <a href="#contact" class="btn btn-ghost" data-fr="Me contacter">Get in touch</a>
       </div>
     </div>
     <div class="hero-photo reveal">
@@ -304,76 +334,107 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="projects">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="top"><span class="secnum">01</span><span class="eyebrow">Selected work</span></div>
-      <h2>Projects</h2>
-      <p>Production AI systems, applied builds, and academic work. Every one started from a real problem.</p>
+      <div class="top"><span class="secnum">01</span><span class="eyebrow" data-fr="Travaux sélectionnés">Selected work</span></div>
+      <h2 data-fr="Projets">Projects</h2>
+      <p data-fr="Systèmes d'IA en production, réalisations appliquées et travaux académiques. Chacun est parti d'un problème réel.">Production AI systems, applied builds, and academic work. Every one started from a real problem.</p>
     </div>
 
-    <div class="group-label reveal">Production &amp; applied AI</div>
+    <div class="group-label reveal" data-fr="IA en production &amp; appliquée">Production &amp; applied AI</div>
     <div class="proj-grid">
       <div class="card reveal">
         <span class="ctx">Kin'Yu · Oracle Cloud</span>
         <h3>LAWAI</h3>
-        <p>End-to-end document verification and understanding pipeline for law firms. OCR plus structured extraction with strict Pydantic contracts and a per-document-type schema architecture, deployed to a client-facing app.</p>
+        <p data-fr="Pipeline de vérification et de compréhension documentaire de bout en bout pour les cabinets d'avocats. OCR et extraction structurée avec des contrats Pydantic stricts et une architecture de schéma par type de document, déployé dans une application destinée au client.">End-to-end document verification and understanding pipeline for law firms. OCR plus structured extraction with strict Pydantic contracts and a per-document-type schema architecture, deployed to a client-facing app.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;6 types de documents juridiques&lt;/strong&gt; avec un traitement de repli générique, des vérifications qui peuvent prendre des semaines ramenées à quelques minutes."><strong>6 legal document types</strong> with a generic fallback, turning checks that can take weeks into minutes.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">LLM Applications</span><span class="tag">Prompt Engineering</span><span class="tag">OCI Document Understanding</span><span class="tag">OCI Generative AI</span><span class="tag">OCI Integration</span><span class="tag">Oracle APEX</span><span class="tag">Oracle Database 26ai</span><span class="tag">Oracle Cloud (OCI)</span><span class="tag">Docker</span><span class="tag">Git</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx">VistaDeep</span>
         <h3>Supply-Chain Risk Assistant</h3>
-        <p>Multi-agent assistant on a hand-rolled Python orchestrator: LLM-based routing with a keyword fallback, agents run concurrently via asyncio, and executions traced to a dedicated table for observability.</p>
+        <p data-fr="Assistant multi-agents sur un orchestrateur Python maison : routage par LLM avec repli par mots-clés, agents exécutés en parallèle via asyncio, et exécutions tracées dans une table dédiée pour l'observabilité.">Multi-agent assistant on a hand-rolled Python orchestrator: LLM-based routing with a keyword fallback, agents run concurrently via asyncio, and executions traced to a dedicated table for observability.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;3 agents de données et un orchestrateur&lt;/strong&gt; : événements de disruption récupérés par web scraping, ~30 indices de matières premières, et le PMI ISM mensuel, le tout interrogeable en langage naturel."><strong>3 data agents and an orchestrator</strong>: web-scraped disruption events, ~30 commodity indices, and the monthly ISM PMI, all queryable in natural language.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">asyncio</span><span class="tag">Multi-Agent Systems</span><span class="tag">Text-to-SQL</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Qdrant</span><span class="tag">Prompt Engineering</span><span class="tag">Git</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
       <div class="card reveal">
-        <span class="ctx">Personal · Football</span>
+        <span class="ctx" data-fr="Personnel · Football">Personal · Football</span>
         <h3>World Cup 2026 Engine</h3>
-        <p>Probabilistic match and tournament prediction combining a Dixon-Coles model with XGBoost, Monte Carlo simulations and a dedicated penalty-shootout model. Documented on LinkedIn.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">XGBoost</span><span class="tag">Dixon-Coles</span><span class="tag">Monte Carlo</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span><span class="tag">Data Visualization</span></div>
+        <p data-fr="Prévision probabiliste de matchs et de tournois, fondée sur un modèle Dixon-Coles pondéré dans le temps, avec Elo et une alternative XGBoost-Poisson, une récursion exacte des probabilités en phase à élimination directe, et un modèle de tirs au but entraîné sur 682 séances réelles. Documenté sur LinkedIn.">Probabilistic match and tournament forecasting built on a time-weighted Dixon-Coles model, with Elo and an XGBoost-Poisson alternative, exact knockout probability recursion, and a penalty model trained on 682 real shootouts. Documented on LinkedIn.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;66% de précision&lt;/strong&gt; sur 100 matchs 2026 hors échantillon ; les deux demi-finales et la finale correctement prédites."><strong>66% accuracy</strong> on 100 out-of-sample 2026 matches; called both semi-finals and the final correctly.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">XGBoost</span><span class="tag">Dixon-Coles</span><span class="tag">Elo Ratings</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span><span class="tag">Data Visualization</span></div>
+        <a class="playbtn" href="world-cup.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7l4.3 3.1-1.6 5h-5.4l-1.6-5z"/></svg>
+          <span data-fr="Lancer le prédicteur en direct">Play the live predictor</span>
+        </a>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/daliaoun/World-cup-2026-" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 008.4 22.9c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0012 .5z"/></svg>
+            Code
+          </a>
+        </div>
       </div>
       <div class="card reveal">
         <span class="ctx">UmanLink</span>
         <h3>Call-Center Analytics Tool</h3>
-        <p>Full-stack app (Python back-end, Flask interface) with automated pipelines for cleaning, processing and visualizing data. Surfaces call-failure causes and best call-back times, saving 40+ hours a month.</p>
+        <p data-fr="Application full-stack (back-end Python, interface Flask) avec des pipelines automatisés de nettoyage, de traitement et de visualisation des données. Met en évidence les causes d'échec des appels et les meilleurs moments de rappel.">Full-stack app (Python back-end, Flask interface) with automated pipelines for cleaning, processing and visualizing data. Surfaces call-failure causes and best call-back times.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;40+ heures économisées par mois&lt;/strong&gt; pour l'équipe du centre d'appels."><strong>40+ hours saved a month</strong> for the call-center team.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span><span class="tag">Data Visualization</span><span class="tag">Git</span></div>
-      </div>
-      <div class="card reveal">
-        <span class="ctx">UmanLink</span>
-        <h3>Orientalent</h3>
-        <p>Intelligent recruitment platform. Automated HR pipeline with OCR and RAG-based candidate matching from natural-language job descriptions, digitizing records and speeding up hiring.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">LLM Applications</span><span class="tag">DeepSeek-R1</span><span class="tag">OpenCV</span><span class="tag">MongoDB</span><span class="tag">Angular</span><span class="tag">Git</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx">UmanLink</span>
         <h3>E-commerce Chatbot</h3>
-        <p>Multi-agent assistant for product search, order tracking and FAQ handling over a vector database and RAG, lifting conversion and offloading customer support.</p>
+        <p data-fr="Assistant multi-agents pour la recherche de produits, le suivi des commandes et la gestion des FAQ, au-dessus d'une base de données vectorielle et du RAG.">Multi-agent assistant for product search, order tracking and FAQ handling over a vector database and RAG.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;+12% de conversion&lt;/strong&gt; ; environ 60% des demandes au support (livraison, remboursements, retours) traitées automatiquement."><strong>+12% conversion</strong>; about 60% of support queries (shipping, refunds, returns) handled automatically.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">GPT-4</span><span class="tag">Multi-Agent Systems</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Chroma</span><span class="tag">Vector Databases</span><span class="tag">Streamlit</span><span class="tag">Git</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
     </div>
 
-    <div class="group-label reveal">Applied &amp; academic</div>
+    <div class="group-label reveal" data-fr="Appliqué &amp; académique">Applied &amp; academic</div>
     <div class="proj-grid">
       <div class="card reveal">
         <span class="ctx">Espérance Sportive de Tunis</span>
         <h3>AI Swimming Assistant</h3>
-        <p>Full-stack AI chatbot for the EST swimming team. Session, progress and nutrition tracking with personalized programs, plus a search engine over 38,000+ historical competition records. Built in Agile.</p>
+        <p data-fr="Chatbot IA full-stack pour l'équipe de natation de l'EST : suivi des séances, des progrès et de la nutrition avec des programmes personnalisés, et un moteur de recherche sur l'historique des compétitions de l'équipe. Développé en Agile.">Full-stack AI chatbot for the EST swimming team: session, progress and nutrition tracking with personalized programs, and a search engine over the team's competition history. Built in Agile.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;38 000+ enregistrements de compétition&lt;/strong&gt; rendus interrogeables en langage naturel."><strong>38,000+ competition records</strong> made searchable in natural language.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">LLaMA 3.1</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Streamlit</span><span class="tag">Web Scraping</span><span class="tag">Agile / Scrum</span><span class="tag">Git</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
       <div class="card reveal">
-        <span class="ctx">Academic · Graph Theory</span>
+        <span class="ctx" data-fr="Académique · Théorie des graphes">Academic · Graph Theory</span>
         <h3>Seam Carving</h3>
-        <p>Content-aware image resizing built with graph modeling (DAG) and dynamic programming, preserving the visually important regions of an image while it is rescaled.</p>
-        <div class="tags"><span class="tag">Graph Theory</span><span class="tag">Dynamic Programming</span><span class="tag">Python</span></div>
+        <p data-fr="Redimensionnement d'image intelligent (content-aware) construit avec une modélisation par graphe (DAG) et de la programmation dynamique, en préservant les régions visuellement importantes de l'image lors du redimensionnement.">Content-aware image resizing built with graph modeling (DAG) and dynamic programming, preserving the visually important regions of an image while it is rescaled.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;Démo Streamlit en direct&lt;/strong&gt; : importez une image, ajustez le nombre de coutures, visualisez la carte d'énergie, jusqu'à 10x plus rapide avec Numba."><strong>Live Streamlit demo</strong>: upload, slide to remove seams, see the energy map, up to 10x faster with Numba.</div>
+        <div class="tags"><span class="tag">Graph Theory</span><span class="tag">Dynamic Programming</span><span class="tag">Python</span><span class="tag">Streamlit</span></div>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/daliaoun/Graph_Project" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 008.4 22.9c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0012 .5z"/></svg>
+            Code
+          </a>
+        </div>
       </div>
       <div class="card reveal">
-        <span class="ctx">Academic · Data Analysis</span>
+        <span class="ctx" data-fr="Académique · Analyse de données">Academic · Data Analysis</span>
         <h3>Social-Media Perception Study</h3>
-        <p>End-to-end study from questionnaire design to statistical analysis: preprocessing, PCA (ACP), MCA (ACM) and automatic classification of the collected data.</p>
+        <p data-fr="Étude de bout en bout, de la conception du questionnaire à l'analyse statistique : prétraitement, ACP (PCA), ACM (MCA) et classification automatique des données recueillies.">End-to-end study from questionnaire design to statistical analysis: preprocessing, PCA (ACP), MCA (ACM) and automatic classification of the collected data.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;53 réponses au questionnaire&lt;/strong&gt; réduites à 6 profils d'utilisateurs clairs via ACP, ACM et clustering."><strong>53 survey responses</strong> reduced to 6 clear user profiles via PCA, MCA and clustering.</div>
         <div class="tags"><span class="tag">R</span><span class="tag">PCA / MCA</span><span class="tag">Clustering</span><span class="tag">Statistical Learning</span><span class="tag">Data Visualization</span></div>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/daliaoun/Social-Media-Usage-Perception-A-Multivariate-Analysis" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 008.4 22.9c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0012 .5z"/></svg>
+            Code
+          </a>
+        </div>
       </div>
       <div class="card reveal">
         <span class="ctx">Medianet</span>
         <h3>SEO Report Automation</h3>
-        <p>Automated SEO reporting platform combining data analysis, dashboards and AI-generated summaries, cutting processing time by more than 90%.</p>
+        <p data-fr="Plateforme de reporting SEO automatisée combinant analyse de données, tableaux de bord et résumés générés par IA.">Automated SEO reporting platform combining data analysis, dashboards and AI-generated summaries.</p>
+        <div class="card-metric" data-fr="&lt;strong&gt;Traitement réduit de 90%+&lt;/strong&gt; (de plusieurs jours à quelques minutes), avec des résumés NLP à 97% de précision."><strong>Processing cut by 90%+</strong> (days to minutes), with NLP summaries at 97% accuracy.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Machine Learning</span><span class="tag">GPT-3.5</span><span class="tag">BeautifulSoup</span><span class="tag">Web Scraping</span><span class="tag">Pandas</span><span class="tag">Power BI</span><span class="tag">Data Visualization</span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
       </div>
     </div>
   </div>
@@ -383,35 +444,35 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="experience" class="alt-bg">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="top"><span class="secnum">02</span><span class="eyebrow">Career</span></div>
-      <h2>Experience</h2>
+      <div class="top"><span class="secnum">02</span><span class="eyebrow" data-fr="Parcours">Career</span></div>
+      <h2 data-fr="Expérience">Experience</h2>
     </div>
     <div class="timeline">
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">AI Engineer, Oracle Cloud</div><div class="tl-org">Kin'Yu Consulting</div></div><div class="tl-date">Jun 2026 – Sep 2026</div></div>
-        <p>Built <strong>LAWAI</strong>, an end-to-end document verification and understanding pipeline for law firms on Oracle Cloud. OCR and structured extraction with strict Pydantic interface contracts, agentic OCI Integration workflows, and a client-facing Oracle APEX app backed by Oracle Database 26ai.</p>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Ingénieur IA, Oracle Cloud">AI Engineer, Oracle Cloud</div><div class="tl-org">Kin'Yu Consulting</div></div><div class="tl-date">Jun 2026 – Sep 2026</div></div>
+        <p data-fr="A développé &lt;strong&gt;LAWAI&lt;/strong&gt;, un pipeline de vérification et de compréhension documentaire de bout en bout pour les cabinets d'avocats sur Oracle Cloud. OCR et extraction structurée avec des contrats d'interface Pydantic stricts, des workflows agentiques OCI Integration, et une application Oracle APEX destinée au client, adossée à Oracle Database 26ai.">Built <strong>LAWAI</strong>, an end-to-end document verification and understanding pipeline for law firms on Oracle Cloud. OCR and structured extraction with strict Pydantic interface contracts, agentic OCI Integration workflows, and a client-facing Oracle APEX app backed by Oracle Database 26ai.</p>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">AI Engineer <span class="free">(Freelance)</span></div><div class="tl-org">VistaDeep</div></div><div class="tl-date">May 2026 – Jul 2026</div></div>
-        <p>Designed a supply-chain risk-intelligence assistant with a multi-agent architecture (Events, Index, Report, Formulation) on a hand-rolled Python orchestrator. LLM-based routing with a keyword fallback, concurrent execution via asyncio, and execution tracing for monitoring.</p>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Ingénieur IA &lt;span class='free'&gt;(Freelance)&lt;/span&gt;">AI Engineer <span class="free">(Freelance)</span></div><div class="tl-org">VistaDeep</div></div><div class="tl-date">May 2026 – Jul 2026</div></div>
+        <p data-fr="A conçu un assistant de veille des risques de la chaîne d'approvisionnement avec une architecture multi-agents (Events, Index, Report, Formulation) sur un orchestrateur Python maison. Routage par LLM avec repli par mots-clés, exécution concurrente via asyncio, et traçage des exécutions pour le suivi.">Designed a supply-chain risk-intelligence assistant with a multi-agent architecture (Events, Index, Report, Formulation) on a hand-rolled Python orchestrator. LLM-based routing with a keyword fallback, concurrent execution via asyncio, and execution tracing for monitoring.</p>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">AI Software Developer</div><div class="tl-org">UmanLink Digital Service</div></div><div class="tl-date">Sep 2024 – Mar 2025</div></div>
-        <p>Developed LLM- and RAG-based solutions that automate complex business processes: recruitment matching, a multi-agent e-commerce assistant, and a full-stack call-center analytics tool that saved 40+ hours a month.</p>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Développeur IA">AI Software Developer</div><div class="tl-org">UmanLink Digital Service</div></div><div class="tl-date">Sep 2024 – Mar 2025</div></div>
+        <p data-fr="A développé des solutions basées sur les LLM et le RAG pour automatiser des processus métier complexes : matching de recrutement, un assistant e-commerce multi-agents, et un outil d'analyse full-stack pour centre d'appels qui a économisé plus de 40 heures par mois.">Developed LLM- and RAG-based solutions that automate complex business processes: recruitment matching, a multi-agent e-commerce assistant, and a full-stack call-center analytics tool that saved 40+ hours a month.</p>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">Data Science Intern</div><div class="tl-org">Medianet</div></div><div class="tl-date">Feb 2024 – Jul 2024</div></div>
-        <p>Built an AI-powered SEO reporting platform (analysis, dashboards, AI-generated summaries) that cut processing time from days to about 3 minutes, applying NLP with 97% accuracy.</p>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Stagiaire Data Science">Data Science Intern</div><div class="tl-org">Medianet</div></div><div class="tl-date">Feb 2024 – Jul 2024</div></div>
+        <p data-fr="A construit une plateforme de reporting SEO assistée par IA (analyse, tableaux de bord, résumés générés par IA) qui a réduit le temps de traitement de plusieurs jours à environ 3 minutes, en appliquant le NLP avec 97% de précision.">Built an AI-powered SEO reporting platform (analysis, dashboards, AI-generated summaries) that cut processing time from days to about 3 minutes, applying NLP with 97% accuracy.</p>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">AI Instructor</div><div class="tl-org">Opus Lab</div></div><div class="tl-date">Aug 2026 – Sep 2026</div></div>
-        <p>Designed and delivered a hands-on AI development bootcamp for students aged 15 to 19 with no coding background, guiding each one to build their first chatbot and first AI agent.</p>
-        <div class="tl-tags"><span class="tag">Teaching</span><span class="tag">LLM</span><span class="tag">Prompt Engineering</span><span class="tag">Curriculum Design</span><span class="tag">Public Speaking</span><span class="tag">Mentoring</span></div>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Formateur IA">AI Instructor</div><div class="tl-org">Opus Lab</div></div><div class="tl-date">Aug 2026 – Sep 2026</div></div>
+        <p data-fr="A conçu et animé un bootcamp pratique de développement IA pour des élèves de 15 à 19 ans sans aucune base en programmation, en guidant chacun jusqu'à son premier chatbot et son premier agent IA.">Designed and delivered a hands-on AI development bootcamp for students aged 15 to 19 with no coding background, guiding each one to build their first chatbot and first AI agent.</p>
+        <div class="tl-tags" data-fr="&lt;span class='tag'&gt;Pédagogie&lt;/span&gt;&lt;span class='tag'&gt;LLM&lt;/span&gt;&lt;span class='tag'&gt;Prompt Engineering&lt;/span&gt;&lt;span class='tag'&gt;Conception pédagogique&lt;/span&gt;&lt;span class='tag'&gt;Prise de parole&lt;/span&gt;&lt;span class='tag'&gt;Mentorat&lt;/span&gt;"><span class="tag">Teaching</span><span class="tag">LLM</span><span class="tag">Prompt Engineering</span><span class="tag">Curriculum Design</span><span class="tag">Public Speaking</span><span class="tag">Mentoring</span></div>
       </div>
       <div class="tl-item reveal">
-        <div class="tl-top"><div><div class="tl-role">Co-Founder</div><div class="tl-org">Croki (EdTech Startup)</div></div><div class="tl-date">Sep 2023 – Sep 2025</div></div>
-        <p>Co-founded an EdTech startup, owning operations, logistics, recruitment and product delivery, and learning what it takes to ship a real product and keep it running.</p>
-        <div class="tl-tags"><span class="tag">Entrepreneurship</span><span class="tag">Operations</span><span class="tag">Team Leadership</span><span class="tag">Event Management</span><span class="tag">Stakeholder Management</span><span class="tag">Marketing</span><span class="tag">Product</span></div>
+        <div class="tl-top"><div><div class="tl-role" data-fr="Co-fondateur">Co-Founder</div><div class="tl-org" data-fr="Croki (startup EdTech)">Croki (EdTech Startup)</div></div><div class="tl-date">Sep 2023 – Sep 2025</div></div>
+        <p data-fr="A cofondé une startup EdTech, en pilotant les opérations, la logistique, le recrutement et la livraison produit, et en apprenant ce qu'il faut pour livrer un vrai produit et le faire tourner.">Co-founded an EdTech startup, owning operations, logistics, recruitment and product delivery, and learning what it takes to ship a real product and keep it running.</p>
+        <div class="tl-tags" data-fr="&lt;span class='tag'&gt;Entrepreneuriat&lt;/span&gt;&lt;span class='tag'&gt;Opérations&lt;/span&gt;&lt;span class='tag'&gt;Management d'équipe&lt;/span&gt;&lt;span class='tag'&gt;Gestion d'événements&lt;/span&gt;&lt;span class='tag'&gt;Gestion des parties prenantes&lt;/span&gt;&lt;span class='tag'&gt;Marketing&lt;/span&gt;&lt;span class='tag'&gt;Produit&lt;/span&gt;"><span class="tag">Entrepreneurship</span><span class="tag">Operations</span><span class="tag">Team Leadership</span><span class="tag">Event Management</span><span class="tag">Stakeholder Management</span><span class="tag">Marketing</span><span class="tag">Product</span></div>
       </div>
     </div>
   </div>
@@ -421,8 +482,8 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="skills">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="top"><span class="secnum">03</span><span class="eyebrow">Toolkit</span></div>
-      <h2>Skills &amp; technologies</h2>
+      <div class="top"><span class="secnum">03</span><span class="eyebrow" data-fr="Boîte à outils">Toolkit</span></div>
+      <h2 data-fr="Compétences &amp; technologies">Skills &amp; technologies</h2>
     </div>
     <div class="skill-grid">
       <div class="skill-block reveal">
@@ -430,27 +491,27 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <div class="tags"><span class="tag">LLM Applications</span><span class="tag">RAG</span><span class="tag">Prompt Engineering</span><span class="tag">Multi-Agent Systems</span><span class="tag">Text-to-SQL</span><span class="tag">LangChain</span><span class="tag">OpenAI API</span><span class="tag">GPT-4</span><span class="tag">LLaMA 3.1</span><span class="tag">DeepSeek-R1</span></div>
       </div>
       <div class="skill-block reveal">
-        <h4>Machine Learning &amp; Stats</h4>
+        <h4 data-fr="Machine Learning &amp; Statistiques">Machine Learning &amp; Stats</h4>
         <div class="tags"><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">NLP</span><span class="tag">Time Series</span><span class="tag">PCA / MCA</span><span class="tag">Clustering</span><span class="tag">XGBoost</span><span class="tag">Monte Carlo</span><span class="tag">scikit-learn</span></div>
       </div>
       <div class="skill-block reveal">
-        <h4>Languages &amp; Frameworks</h4>
+        <h4 data-fr="Langages &amp; Frameworks">Languages &amp; Frameworks</h4>
         <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">asyncio</span><span class="tag">Flask</span><span class="tag">Streamlit</span><span class="tag">R</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">C</span></div>
       </div>
       <div class="skill-block reveal">
-        <h4>Data &amp; Libraries</h4>
+        <h4 data-fr="Data &amp; Bibliothèques">Data &amp; Libraries</h4>
         <div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span><span class="tag">OpenCV</span><span class="tag">BeautifulSoup</span><span class="tag">Web Scraping</span><span class="tag">Data Visualization</span><span class="tag">Power BI</span></div>
       </div>
       <div class="skill-block reveal">
-        <h4>Databases &amp; Vector Stores</h4>
+        <h4 data-fr="Bases de données &amp; Vector Stores">Databases &amp; Vector Stores</h4>
         <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Supabase</span><span class="tag">Chroma</span><span class="tag">Qdrant</span><span class="tag">Vector Databases</span></div>
       </div>
       <div class="skill-block reveal">
-        <h4>Cloud, DevOps &amp; Tools</h4>
+        <h4 data-fr="Cloud, DevOps &amp; Outils">Cloud, DevOps &amp; Tools</h4>
         <div class="tags"><span class="tag">Oracle Cloud (OCI)</span><span class="tag">OCI Document Understanding</span><span class="tag">OCI Generative AI</span><span class="tag">OCI Integration</span><span class="tag">Oracle APEX</span><span class="tag">Oracle Database 26ai</span><span class="tag">Docker</span><span class="tag">Linux / shell (entry level)</span><span class="tag">Git</span><span class="tag">Jupyter</span><span class="tag">LaTeX</span><span class="tag">Agile / Scrum</span></div>
       </div>
     </div>
-    <p class="muted reveal" style="margin-top:20px;font-size:.92rem"><strong style="color:var(--ink)">Languages spoken:</strong> Arabic (native), French (fluent), English (professional)</p>
+    <p class="muted reveal" style="margin-top:20px;font-size:.92rem" data-fr="&lt;strong style='color:var(--ink)'&gt;Langues parlées :&lt;/strong&gt; Arabe (natif), Français (courant), Anglais (professionnel)"><strong style="color:var(--ink)">Languages spoken:</strong> Arabic (native), French (fluent), English (professional)</p>
   </div>
 </section>
 
@@ -458,60 +519,58 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="beyond" class="alt-bg">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="top"><span class="secnum">04</span><span class="eyebrow">Beyond the code</span></div>
-      <h2>What drives me</h2>
+      <div class="top"><span class="secnum">04</span><span class="eyebrow" data-fr="Au-delà du code">Beyond the code</span></div>
+      <h2 data-fr="Ce qui m'anime">What drives me</h2>
     </div>
 
     <div class="about-grid">
       <div class="about-text reveal">
-        <p>The thread through everything I do is building things people actually use. That is as true for a production AI system as it is for a student event with a room full of people counting on it.</p>
-        <p>The habit started before the code. At fifteen I was volunteering with kids who needed someone in their corner, and that grew into organizing events, co-founding a startup, and teaching. AI came later, and it stuck because it is the sharpest tool I have found for the same goal: take something painful and make it work for real people.</p>
-        <p>These days I split my time between shipping AI and helping run the communities I care about, and I have had the chance to represent my <strong>university</strong> and my <strong>country</strong> along the way. When I log off, I am usually watching Barça or arguing with my own World Cup model.</p>
+        <p data-fr="Le fil conducteur de tout ce que je fais, c'est construire des choses que les gens utilisent vraiment. C'est aussi vrai pour un système d'IA en production que pour un événement étudiant avec une salle pleine de personnes qui comptent dessus.">The thread through everything I do is building things people actually use. That is as true for a production AI system as it is for a student event with a room full of people counting on it.</p>
+        <p data-fr="L'habitude a commencé avant le code. À quinze ans, je faisais du bénévolat auprès d'enfants qui avaient besoin de quelqu'un dans leur coin, et cela s'est transformé en organisation d'événements, en cofondation d'une startup et en enseignement. L'IA est venue plus tard, et elle est restée parce que c'est l'outil le plus tranchant que j'aie trouvé pour le même objectif : prendre quelque chose de pénible et le faire fonctionner pour de vraies personnes.">The habit started before the code. At fifteen I was volunteering with kids who needed someone in their corner, and that grew into organizing events, co-founding a startup, and teaching. AI came later, and it stuck because it is the sharpest tool I have found for the same goal: take something painful and make it work for real people.</p>
+        <p data-fr="Aujourd'hui, je partage mon temps entre le développement d'IA et l'animation des communautés qui me tiennent à cœur, et j'ai eu la chance de représenter mon &lt;strong&gt;université&lt;/strong&gt; et mon &lt;strong&gt;pays&lt;/strong&gt; en chemin. Quand je me déconnecte, je regarde en général le Barça ou je débats avec mon propre modèle de Coupe du Monde.">These days I split my time between shipping AI and helping run the communities I care about, and I have had the chance to represent my <strong>university</strong> and my <strong>country</strong> along the way. When I log off, I am usually watching Barça or arguing with my own World Cup model.</p>
       </div>
       <div class="about-photo reveal">
         <img src="assets/hero-trophy.jpg" alt="Mohamed Ali Aoun lifting a trophy, draped in the Tunisian flag" />
       </div>
     </div>
 
-    <div class="inv-title reveal">Leadership &amp; community</div>
+    <div class="inv-title reveal" data-fr="Leadership &amp; communauté">Leadership &amp; community</div>
     <div class="inv">
       <div class="inv-row reveal">
         <img class="inv-thumb" src="assets/forum-sesame.jpg" alt="Croki team">
         <div class="inv-body">
           <h4>Croki <span class="date">2023 – 2025</span></h4>
-          <div class="role">Co-founder · Operations &amp; Events</div>
-          <p>Co-founded Croki and ran operations end to end: managing sessions, recruiting professors, owning content, scheduling, logistics and marketing. Flagship initiatives (Bac to the Future, Orientour) reached 650+ students.</p>
+          <div class="role" data-fr="Co-fondateur · Opérations &amp; Événements">Co-founder · Operations &amp; Events</div>
+          <p data-fr="A cofondé Croki et piloté les opérations de bout en bout : gestion des séances, recrutement de professeurs, responsabilité du contenu, planification, logistique et marketing. Les initiatives phares (Bac to the Future, Orientour) ont touché plus de 650 élèves.">Co-founded Croki and ran operations end to end: managing sessions, recruiting professors, owning content, scheduling, logistics and marketing. Flagship initiatives (Bac to the Future, Orientour) reached 650+ students.</p>
         </div>
       </div>
       <div class="inv-row reveal">
         <img class="inv-thumb" src="assets/enactus-team.jpg" alt="Enactus team">
         <div class="inv-body">
           <h4>Enactus ISI <span class="date">2021 – 2023</span></h4>
-          <div class="role">Finance &amp; Events Lead · Pitching Lead</div>
-          <p>Led Career Rock-IT (500+ attendees, 50+ members) and pitched at national and world competitions with podium placements.</p>
+          <div class="role" data-fr="Responsable Finance &amp; Événements · Responsable Pitch">Finance &amp; Events Lead · Pitching Lead</div>
+          <p data-fr="A dirigé Career Rock-IT (500+ participants, 50+ membres) et pitché lors de compétitions nationales et mondiales avec des places sur le podium.">Led Career Rock-IT (500+ attendees, 50+ members) and pitched at national and world competitions with podium placements.</p>
         </div>
       </div>
       <div class="inv-row reveal">
         <img class="inv-thumb" src="assets/donbosco.jpg" alt="Don Bosco youth exchange">
         <div class="inv-body">
           <h4>Don Bosco, Manouba &amp; Tunis <span class="date">2017 – 2020</span></h4>
-          <div class="role">Volunteer Youth Animator</div>
-          <p>Ran cultural, sport and educational events for underserved youth (starting at fifteen) and managed Tunisia-Italy exchange programs.</p>
+          <div class="role" data-fr="Animateur jeunesse bénévole">Volunteer Youth Animator</div>
+          <p data-fr="A animé des événements culturels, sportifs et éducatifs pour des jeunes défavorisés (dès quinze ans) et géré des programmes d'échange Tunisie-Italie.">Ran cultural, sport and educational events for underserved youth (starting at fifteen) and managed Tunisia-Italy exchange programs.</p>
         </div>
       </div>
       <div class="inv-row reveal">
-        <!-- Drop your FITT/Ambassadors photo at assets/fitt.jpg and it will replace this placeholder automatically. -->
-        <img class="inv-thumb" src="assets/fitt.jpg" alt="FITT Timișoara" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="inv-thumb ph-mini" style="display:none"><span>soon</span></div>
+        <img class="inv-thumb" src="assets/dauphine.jpg" alt="Dauphine Tunis Ambassadors">
         <div class="inv-body">
-          <h4>FITT Timișoara &amp; Dauphine Ambassadors <span class="date">2025 – Present</span></h4>
-          <div class="role">Volunteer · Ambassador</div>
-          <p>Ran operations for an EU-funded international youth festival in Romania, and represent Dauphine at academic events.</p>
+          <h4 data-fr="Dauphine Tunis Ambassadors &lt;span class='date'&gt;2025 – Présent&lt;/span&gt;">Dauphine Tunis Ambassadors <span class="date">2025 – Present</span></h4>
+          <div class="role" data-fr="Ambassadeur">Ambassador</div>
+          <p data-fr="Représente l'Université Paris Dauphine-PSL lors d'événements académiques et promeut ses programmes d'IA et de Science des Données.">Represent Université Paris Dauphine-PSL at academic events and promote its AI and Data Science programs.</p>
         </div>
       </div>
     </div>
 
-    <div class="inv-title reveal" style="margin-top:34px">Teaching &amp; speaking</div>
+    <div class="inv-title reveal" style="margin-top:34px" data-fr="Enseignement &amp; prises de parole">Teaching &amp; speaking</div>
     <div class="speak">
       <div class="speak-card reveal">
         <div class="imgwrap">
@@ -519,15 +578,15 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
           <img src="assets/opus-lab.jpg" alt="Opus Lab AI bootcamp" onerror="this.style.display='none';this.parentElement.querySelector('.ph').style.display='flex';">
           <div class="ph" style="display:none"><div class="mono-monogram" style="font-size:2rem">MA</div><div class="note">photo coming soon</div></div>
         </div>
-        <div class="body"><span class="ctx">Opus Lab · Instructor</span><h4>AI Dev Bootcamp</h4><p>Taught teens with no coding background to build their first chatbot and first agent.</p></div>
+        <div class="body"><span class="ctx" data-fr="Opus Lab · Formateur">Opus Lab · Instructor</span><h4 data-fr="Bootcamp Dév IA">AI Dev Bootcamp</h4><p data-fr="A appris à des ados sans base en code à construire leur premier chatbot et leur premier agent.">Taught teens with no coding background to build their first chatbot and first agent.</p></div>
       </div>
       <div class="speak-card reveal">
         <div class="imgwrap"><img src="assets/teaching-prompt.jpg" alt="Prompt engineering session"></div>
-        <div class="body"><span class="ctx">Hackathon · Speaker</span><h4>Prompt Engineering Session</h4><p>A hands-on session for participants brand new to the domain.</p></div>
+        <div class="body"><span class="ctx" data-fr="Hackathon · Intervenant">Hackathon · Speaker</span><h4 data-fr="Session Prompt Engineering">Prompt Engineering Session</h4><p data-fr="Une session pratique pour des participants tout nouveaux dans le domaine.">A hands-on session for participants brand new to the domain.</p></div>
       </div>
       <div class="speak-card reveal">
         <div class="imgwrap"><img src="assets/croki-bac.jpg" alt="Entrepreneurship talk"></div>
-        <div class="body"><span class="ctx">Dauphine · Speaker</span><h4>Entrepreneurship Talk</h4><p>Shared the Croki journey and the real work behind a startup.</p></div>
+        <div class="body"><span class="ctx" data-fr="Dauphine · Intervenant">Dauphine · Speaker</span><h4 data-fr="Conférence sur l'entrepreneuriat">Entrepreneurship Talk</h4><p data-fr="A partagé l'aventure Croki et le vrai travail derrière une startup.">Shared the Croki journey and the real work behind a startup.</p></div>
       </div>
     </div>
   </div>
@@ -537,52 +596,51 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="contact">
   <div class="wrap">
     <div class="contact-card reveal">
-      <h2>Let's build something.</h2>
-      <p>I am looking for an end-of-studies internship in AI engineering, and always up for a good conversation about AI, startups, or football.</p>
+      <h2 data-fr="Construisons quelque chose.">Let's build something.</h2>
+      <p data-fr="Je recherche un stage de fin d'études en ingénierie IA, et je suis toujours partant pour une bonne discussion sur l'IA, les startups ou le football.">I am looking for an end-of-studies internship in AI engineering, and always up for a good conversation about AI, startups, or football.</p>
       <div class="contact-links">
         <a class="clink solid" href="mailto:mohamed-ali.aoun@dauphine.eu">
           <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          Email
+          <span data-fr="E-mail">Email</span>
         </a>
         <a class="clink" href="https://www.linkedin.com/in/mohamed-ali-aoun" target="_blank" rel="noopener">
           <svg class="i" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6h-4v-10h4v1.5A4 4 0 0116 8zM6 9H2v11h4zM4 3a2 2 0 100 4 2 2 0 000-4z"/></svg>
           LinkedIn
         </a>
-        <!-- TODO: replace the href below with your GitHub URL once your profile is ready -->
-        <a class="clink" href="https://github.com/" target="_blank" rel="noopener">
+        <a class="clink" href="https://github.com/daliaoun" target="_blank" rel="noopener">
           <svg class="i" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
           GitHub
         </a>
         <a class="clink" href="assets/Mohamed_Ali_Aoun_CV.pdf" download>
           <svg class="i" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-          Download CV
+          <span data-fr="Télécharger le CV">Download CV</span>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<footer><div class="wrap">© <span id="yr"></span> Mohamed Ali Aoun · built in Tunis</div></footer>
+<footer><div class="wrap">© <span id="yr"></span> Mohamed Ali Aoun · <span data-fr="conçu à Tunis">built in Tunis</span></div></footer>
 
 <!-- ===== CHAT WIDGET ===== -->
 <button id="chatFab" aria-label="Ask about Dali">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-  Ask about me
+  <span data-fr="Me poser une question">Ask about me</span>
 </button>
 <div id="chatPanel" role="dialog" aria-label="Chat with Dali's assistant">
   <div class="chat-head">
     <div class="av">MA</div>
-    <div><div class="t">Ask about Dali</div><div class="s">AI assistant</div></div>
+    <div><div class="t" data-fr="À propos de Dali">Ask about Dali</div><div class="s" data-fr="Assistant IA">AI assistant</div></div>
     <button class="x" id="chatClose" aria-label="Close">&times;</button>
   </div>
   <div class="chat-body" id="chatBody"></div>
   <div class="chat-foot">
-    <input id="chatInput" type="text" placeholder="Ask me anything about Dali..." autocomplete="off" />
+    <input id="chatInput" type="text" placeholder="Ask me anything about Dali..." data-en-ph="Ask me anything about Dali..." data-fr-ph="Posez-moi vos questions sur Dali..." autocomplete="off" />
     <button id="chatSend" aria-label="Send">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
     </button>
   </div>
-  <div class="chat-note">AI assistant, grounded on Dali's real work. It can occasionally be wrong.</div>
+  <div class="chat-note" data-fr="Assistant IA, fondé sur le travail réel de Dali. Il peut occasionnellement se tromper.">AI assistant, grounded on Dali's real work. It can occasionally be wrong.</div>
 </div>
 
 <script>
@@ -602,19 +660,45 @@ tb.addEventListener('click',()=>{
   try{localStorage.setItem('theme',next)}catch(e){}
 });
 
+/* ===== LANGUAGE TOGGLE (EN / FR) ===== */
+const langBtn=document.getElementById('langBtn');
+const I18N=[...document.querySelectorAll('[data-fr]')];
+const EN_HTML=new Map(); I18N.forEach(el=>EN_HTML.set(el,el.innerHTML));
+const chatInputEl=document.getElementById('chatInput');
+window.__lang='en';
+function applyLang(l){
+  window.__lang=l;
+  I18N.forEach(el=>{ el.innerHTML = (l==='fr') ? el.getAttribute('data-fr') : EN_HTML.get(el); });
+  if(chatInputEl){ chatInputEl.placeholder = (l==='fr') ? chatInputEl.getAttribute('data-fr-ph') : chatInputEl.getAttribute('data-en-ph'); }
+  document.documentElement.lang=l;
+  if(langBtn){ langBtn.textContent=(l==='fr')?'EN':'FR'; langBtn.setAttribute('aria-label',(l==='fr')?'Switch to English':'Passer en français'); }
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+let savedLang=null; try{savedLang=localStorage.getItem('lang')}catch(e){}
+if(savedLang==='fr') applyLang('fr');
+if(langBtn) langBtn.addEventListener('click',()=>applyLang(window.__lang==='fr'?'en':'fr'));
+
 /* ===== CHAT WIDGET LOGIC ===== */
 (function(){
   const fab=document.getElementById('chatFab'), panel=document.getElementById('chatPanel'),
         closeB=document.getElementById('chatClose'), body=document.getElementById('chatBody'),
         input=document.getElementById('chatInput'), send=document.getElementById('chatSend');
   const history=[]; let greeted=false, busy=false;
-  const SUGGESTIONS=["What has Dali built?","Does he know FastAPI?","Tell me about LAWAI","What is he looking for?"];
+  const L=()=>window.__lang==='fr'?'fr':'en';
+  const SUGG={en:["What has Dali built?","Does he know FastAPI?","Tell me about LAWAI","What is he looking for?"],
+              fr:["Qu'a construit Dali ?","Connaît-il FastAPI ?","Parle-moi de LAWAI","Que recherche-t-il ?"]};
+  const GREET={en:"Hi! I'm Dali's assistant. Ask me anything about his experience, projects or skills.",
+               fr:"Bonjour ! Je suis l'assistant de Dali. Posez-moi vos questions sur son expérience, ses projets ou ses compétences."};
+  const ERR_REACH={en:"I can't reach the assistant from here. This chat works on the live site once it's deployed. In the meantime, email Dali at mohamed-ali.aoun@dauphine.eu.",
+                   fr:"Je n'arrive pas à joindre l'assistant d'ici. Ce chat fonctionne sur le site en ligne une fois déployé. En attendant, écrivez à Dali : mohamed-ali.aoun@dauphine.eu."};
+  const ERR_GEN={en:"Sorry, something went wrong. You can email Dali at mohamed-ali.aoun@dauphine.eu.",
+                 fr:"Désolé, une erreur s'est produite. Vous pouvez écrire à Dali : mohamed-ali.aoun@dauphine.eu."};
 
   function bubble(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}
-  function chips(){const c=document.createElement('div');c.className='chat-chips';SUGGESTIONS.forEach(q=>{const b=document.createElement('button');b.className='chat-chip';b.textContent=q;b.onclick=()=>{c.remove();ask(q);};c.appendChild(b);});body.appendChild(c);body.scrollTop=body.scrollHeight;}
+  function chips(){const c=document.createElement('div');c.className='chat-chips';(SUGG[L()]).forEach(q=>{const b=document.createElement('button');b.className='chat-chip';b.textContent=q;b.onclick=()=>{c.remove();ask(q);};c.appendChild(b);});body.appendChild(c);body.scrollTop=body.scrollHeight;}
   function typing(){const d=document.createElement('div');d.className='msg bot typing';d.innerHTML='<span></span><span></span><span></span>';body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}
 
-  function open(){panel.classList.add('open');fab.style.display='none';if(!greeted){greeted=true;bubble("Hi! I'm Dali's assistant. Ask me anything about his experience, projects or skills.",'bot');chips();}setTimeout(()=>input.focus(),50);}
+  function open(){panel.classList.add('open');fab.style.display='none';if(!greeted){greeted=true;bubble(GREET[L()],'bot');chips();}setTimeout(()=>input.focus(),50);}
   function close(){panel.classList.remove('open');fab.style.display='inline-flex';}
   fab.onclick=open; closeB.onclick=close;
 
@@ -655,11 +739,11 @@ tb.addEventListener('click',()=>{
       });
       await pump.catch(()=>{});
       let full=target;
-      if(!full.trim()){ full="Sorry, something went wrong. You can email Dali at mohamed-ali.aoun@dauphine.eu."; el.textContent=full; }
+      if(!full.trim()){ full=ERR_GEN[L()]; el.textContent=full; }
       history.push({role:'assistant',content:full});
     }catch(e){
       t.remove();
-      bubble("I can't reach the assistant from here. This chat works on the live site once it's deployed. In the meantime, email Dali at mohamed-ali.aoun@dauphine.eu.",'bot');
+      bubble(ERR_REACH[L()],'bot');
     }
     busy=false; send.disabled=false; input.focus();
   }
