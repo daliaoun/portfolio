@@ -44,6 +44,32 @@ const FAIL_MSG  = "Sorry, I could not get an answer just now. You can always ema
 const BUSY_MSG  = "I'm getting a lot of questions right now. Please try again in a minute.";
 const EMPTY_MSG = "Ask me anything about Dali's experience, projects or skills.";
 
+// Optional Q&A logging to Supabase (free tier). Leave the env vars unset to disable.
+// Works with either manually-set vars (SUPABASE_URL / SUPABASE_KEY) or the names the
+// official Supabase Vercel integration adds (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY).
+const SUPA_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
+const SUPA_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY || '';
+const SUPA_TABLE = process.env.SUPABASE_TABLE || 'chat_logs';
+
+async function logQA(question, answer) {
+  if (!SUPA_URL || !SUPA_KEY) return;                 // logging is opt-in
+  const q = (question || '').slice(0, 2000);
+  const a = (answer   || '').slice(0, 8000);
+  if (!q && !a) return;
+  try {
+    await fetchWithTimeout(`${SUPA_URL}/rest/v1/${SUPA_TABLE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPA_KEY,
+        Authorization: `Bearer ${SUPA_KEY}`,
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ question: q, answer: a }),
+    });
+  } catch (_) { /* never let logging break the chat */ }
+}
+
 // ===========================================================================
 //  KNOWLEDGE BASE  -  everything the assistant is allowed to know
 // ===========================================================================
@@ -270,6 +296,7 @@ module.exports = async (req, res) => {
     sendText(res, EMPTY_MSG);
     return;
   }
+  const question = messages[messages.length - 1].content;
 
   // Call the model, retrying once with a fresh model if the first is rejected.
   let upstream = null;
@@ -320,6 +347,7 @@ module.exports = async (req, res) => {
     const decoder = new TextDecoder();
     let buffer = '';
     let wrote = false;
+    let answerText = '';
 
     while (true) {
       if (aborted) { try { await reader.cancel(); } catch (_) {} break; }
@@ -334,15 +362,16 @@ module.exports = async (req, res) => {
         const t = line.trim();
         if (!t.startsWith('data:')) continue;
         const payload = t.slice(5).trim();
-        if (payload === '[DONE]') { if (!wrote) res.write(FAIL_MSG); res.end(); return; }
+        if (payload === '[DONE]') { if (!wrote) res.write(FAIL_MSG); await logQA(question, answerText); res.end(); return; }
         try {
           const j = JSON.parse(payload);
           const delta = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
-          if (delta) { res.write(delta); wrote = true; }
+          if (delta) { res.write(delta); wrote = true; answerText += delta; }
         } catch (_) { /* ignore keep-alive / partial lines */ }
       }
     }
     if (!wrote && !aborted) res.write(FAIL_MSG);
+    await logQA(question, answerText);
     res.end();
   } catch (_) {
     try { if (!res.writableEnded) { if (!res.headersSent) sendText(res, FAIL_MSG); else res.end(); } } catch (__) {}

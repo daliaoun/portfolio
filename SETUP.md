@@ -60,6 +60,33 @@ Quick way to check the function is alive without using any credits: open `https:
 
 ---
 
+## Part 3b (optional): Log every chatbot question to a database
+
+If you want to see what people ask the chatbot, you can log every question and answer to a free Supabase table. This is completely optional: if you skip it, the chatbot works exactly the same, it just does not record anything.
+
+1. Create a free project at `https://supabase.com` (no card needed).
+2. In the project, open the **SQL Editor** and run this once to create the table:
+   ```sql
+   create table chat_logs (
+     id          bigint generated always as identity primary key,
+     created_at  timestamptz default now(),
+     question    text,
+     answer      text
+   );
+   ```
+3. Get two values from **Project Settings**:
+   - **Project URL** (under *API*), looks like `https://abcd1234.supabase.co`.
+   - **service_role** key (under *API Keys*). This is secret, treat it like a password and only put it in Vercel, never in your code or the browser.
+4. In Vercel, **Settings > Environment Variables**, add:
+   - `SUPABASE_URL` = your Project URL
+   - `SUPABASE_KEY` = the `service_role` key
+   - (optional) `SUPABASE_TABLE` = `chat_logs` (only needed if you named the table differently)
+5. Redeploy (Deployments > latest > Redeploy) so the function picks them up.
+
+From then on, every question and the answer land as a new row in the `chat_logs` table, which you can browse under **Table Editor** in Supabase. Logging never blocks or breaks the chat: if Supabase is down or the keys are missing, the chatbot just skips logging. The `service_role` key is used only server-side in the Vercel function, so it is never exposed to visitors.
+
+---
+
 ## Part 4 (optional): Your own domain
 
 In Vercel, open your project, go to **Settings > Domains**, and add a domain you own. Vercel shows you the DNS records to set. If you do not have a domain, the free `.vercel.app` link is perfectly fine to put on your CV and LinkedIn.

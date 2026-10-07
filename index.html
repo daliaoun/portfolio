@@ -32,11 +32,12 @@
   --border:#DCDCC5;
   --ink:#222417;
   --ink-soft:#565941;
-  --ink-faint:#8B8C73;
+  --ink-faint:#6D6F56;
   --accent:#5E6E2A;        /* olive */
   --accent-deep:#465220;
   --accent-2:#A9903A;      /* muted gold */
   --accent-soft:#E7E8CF;
+  --on-accent:#fff;
   --shadow:0 1px 2px rgba(50,55,20,.05),0 10px 30px rgba(60,70,20,.07);
   --shadow-lg:0 24px 60px rgba(50,60,20,.16);
   --radius:16px;
@@ -50,7 +51,7 @@
   @media (prefers-color-scheme: dark){
     --bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;
     --ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;
-    --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;
+    --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;--on-accent:#15180E;
     --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.35);
     --shadow-lg:0 24px 60px rgba(0,0,0,.5);
   }
@@ -58,7 +59,7 @@
 :root[data-theme="dark"]{
   --bg:#181A12;--bg-alt:#202217;--surface:#22251A;--border:#353823;
   --ink:#EDEEE0;--ink-soft:#BCBEA3;--ink-faint:#84876C;
-  --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;
+  --accent:#A6BA5C;--accent-deep:#8CA347;--accent-2:#CBB25E;--accent-soft:#2C3120;--on-accent:#15180E;
   --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.35);
   --shadow-lg:0 24px 60px rgba(0,0,0,.5);
 }
@@ -86,7 +87,7 @@ img{max-width:100%;display:block}
 .nav-actions{display:flex;gap:10px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:.9rem;padding:10px 18px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s,color .2s}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:var(--shadow)}
 .btn-primary:hover{box-shadow:var(--shadow-lg)}
 .btn-ghost{background:transparent;color:var(--ink);border-color:var(--border)}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -136,7 +137,7 @@ section{padding:66px 0;position:relative}
 .card p{font-size:.92rem;color:var(--ink-soft);margin:0 0 14px;flex:1}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);background:var(--bg-alt);border:1px solid var(--border);padding:3px 8px;border-radius:6px;font-weight:500}
-.playbtn{display:inline-flex;align-items:center;gap:7px;margin-top:14px;align-self:flex-start;background:var(--accent);color:#fff;font-family:var(--sans);font-weight:600;font-size:.82rem;padding:9px 15px;border-radius:999px;transition:transform .15s,box-shadow .2s}
+.playbtn{display:inline-flex;align-items:center;gap:7px;margin-top:14px;align-self:flex-start;background:var(--accent);color:var(--on-accent);font-family:var(--sans);font-weight:600;font-size:.82rem;padding:9px 15px;border-radius:999px;transition:transform .15s,box-shadow .2s}
 .playbtn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .playbtn svg{width:15px;height:15px}
 .card-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
@@ -201,14 +202,14 @@ section{padding:66px 0;position:relative}
 .speak-card p{font-size:.85rem;color:var(--ink-soft);margin:0}
 
 /* CONTACT */
-.contact-card{background:linear-gradient(135deg,var(--accent-deep),var(--accent));border-radius:24px;padding:56px 44px;text-align:center;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.contact-card{background:linear-gradient(135deg,#465220,#5E6E2A);border-radius:24px;padding:56px 44px;text-align:center;color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
 .contact-card::before{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;background:rgba(255,255,255,.10);border-radius:50%}
 .contact-card h2{color:#fff;font-size:clamp(1.8rem,4vw,2.7rem);margin-bottom:12px}
 .contact-card p{color:rgba(255,255,255,.92);max-width:46ch;margin:0 auto 26px;font-size:1.02rem}
 .contact-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 .clink{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:.92rem;transition:background .2s,transform .15s}
 .clink:hover{background:rgba(255,255,255,.26);transform:translateY(-2px)}
-.clink.solid{background:#fff;color:var(--accent-deep)}
+.clink.solid{background:#fff;color:#465220}
 
 footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;color:var(--ink-faint);font-family:var(--mono);font-size:.78rem}
 
@@ -217,7 +218,7 @@ footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;color
 
 /* ===== CHAT WIDGET ===== */
 #chatFab{position:fixed;right:22px;bottom:22px;z-index:80;display:inline-flex;align-items:center;gap:9px;
-  background:var(--accent);color:#fff;border:none;cursor:pointer;padding:13px 18px;border-radius:999px;
+  background:var(--accent);color:var(--on-accent);border:none;cursor:pointer;padding:13px 18px;border-radius:999px;
   font-family:var(--sans);font-weight:600;font-size:.92rem;box-shadow:var(--shadow-lg);transition:transform .15s}
 #chatFab:hover{transform:translateY(-2px)}
 #chatFab svg{width:18px;height:18px}
@@ -234,7 +235,7 @@ footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;color
 .chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
 .msg{max-width:85%;padding:10px 13px;border-radius:13px;font-size:.9rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
 .msg.bot{background:var(--bg-alt);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
-.msg.user{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.user{background:var(--accent);color:var(--on-accent);align-self:flex-end;border-bottom-right-radius:4px}
 .chat-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
 .chat-chip{font-size:.78rem;font-family:var(--sans);background:transparent;border:1px solid var(--border);color:var(--accent);
   padding:7px 12px;border-radius:999px;cursor:pointer;transition:border-color .2s,background .2s}
@@ -246,7 +247,7 @@ footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;color
 .chat-foot{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px}
 .chat-foot input{flex:1;border:1px solid var(--border);background:var(--bg);color:var(--ink);border-radius:999px;padding:11px 15px;font-family:var(--sans);font-size:.9rem;outline:none}
 .chat-foot input:focus{border-color:var(--accent)}
-.chat-foot button{background:var(--accent);color:#fff;border:none;border-radius:50%;width:42px;height:42px;flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-foot button{background:var(--accent);color:var(--on-accent);border:none;border-radius:50%;width:42px;height:42px;flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .chat-foot button:disabled{opacity:.5;cursor:default}
 .chat-note{font-family:var(--mono);font-size:.62rem;color:var(--ink-faint);text-align:center;padding:0 12px 10px}
 @media(max-width:640px){
@@ -273,6 +274,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
   .contact-card{padding:40px 22px}
 }
 </style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
 </head>
 <body>
 
@@ -347,7 +349,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Pipeline de vérification et de compréhension documentaire de bout en bout pour les cabinets d'avocats. OCR et extraction structurée avec des contrats Pydantic stricts et une architecture de schéma par type de document, déployé dans une application destinée au client.">End-to-end document verification and understanding pipeline for law firms. OCR plus structured extraction with strict Pydantic contracts and a per-document-type schema architecture, deployed to a client-facing app.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;6 types de documents juridiques&lt;/strong&gt; avec un traitement de repli générique, des vérifications qui peuvent prendre des semaines ramenées à quelques minutes."><strong>6 legal document types</strong> with a generic fallback, turning checks that can take weeks into minutes.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Pydantic</span><span class="tag">LLM Applications</span><span class="tag">Prompt Engineering</span><span class="tag">OCI Document Understanding</span><span class="tag">OCI Generative AI</span><span class="tag">OCI Integration</span><span class="tag">Oracle APEX</span><span class="tag">Oracle Database 26ai</span><span class="tag">Oracle Cloud (OCI)</span><span class="tag">Docker</span><span class="tag">Git</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx">VistaDeep</span>
@@ -355,13 +357,13 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Assistant multi-agents sur un orchestrateur Python maison : routage par LLM avec repli par mots-clés, agents exécutés en parallèle via asyncio, et exécutions tracées dans une table dédiée pour l'observabilité.">Multi-agent assistant on a hand-rolled Python orchestrator: LLM-based routing with a keyword fallback, agents run concurrently via asyncio, and executions traced to a dedicated table for observability.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;3 agents de données et un orchestrateur&lt;/strong&gt; : événements de disruption récupérés par web scraping, ~30 indices de matières premières, et le PMI ISM mensuel, le tout interrogeable en langage naturel."><strong>3 data agents and an orchestrator</strong>: web-scraped disruption events, ~30 commodity indices, and the monthly ISM PMI, all queryable in natural language.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">OpenAI API</span><span class="tag">asyncio</span><span class="tag">Multi-Agent Systems</span><span class="tag">Text-to-SQL</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Qdrant</span><span class="tag">Prompt Engineering</span><span class="tag">Git</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx" data-fr="Personnel · Football">Personal · Football</span>
         <h3>World Cup 2026 Engine</h3>
         <p data-fr="Prévision probabiliste de matchs et de tournois, fondée sur un modèle Dixon-Coles pondéré dans le temps, avec Elo et une alternative XGBoost-Poisson, une récursion exacte des probabilités en phase à élimination directe, et un modèle de tirs au but entraîné sur 682 séances réelles. Documenté sur LinkedIn.">Probabilistic match and tournament forecasting built on a time-weighted Dixon-Coles model, with Elo and an XGBoost-Poisson alternative, exact knockout probability recursion, and a penalty model trained on 682 real shootouts. Documented on LinkedIn.</p>
-        <div class="card-metric" data-fr="&lt;strong&gt;66% de précision&lt;/strong&gt; sur 100 matchs 2026 hors échantillon ; les deux demi-finales et la finale correctement prédites."><strong>66% accuracy</strong> on 100 out-of-sample 2026 matches; called both semi-finals and the final correctly.</div>
+        <div class="card-metric" data-fr="&lt;strong&gt;Les deux demi-finales et la finale 2026 correctement prédites&lt;/strong&gt;, à contre-courant du consensus des bookmakers ; 66% de précision sur 100 matchs hors échantillon."><strong>Called both 2026 semi-finals and the final correctly</strong>, against the betting-market consensus; 66% accuracy on 100 out-of-sample matches.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Statistical Learning</span><span class="tag">XGBoost</span><span class="tag">Dixon-Coles</span><span class="tag">Elo Ratings</span><span class="tag">scikit-learn</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Jupyter</span><span class="tag">Data Visualization</span></div>
         <a class="playbtn" href="world-cup.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7l4.3 3.1-1.6 5h-5.4l-1.6-5z"/></svg>
@@ -380,7 +382,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Application full-stack (back-end Python, interface Flask) avec des pipelines automatisés de nettoyage, de traitement et de visualisation des données. Met en évidence les causes d'échec des appels et les meilleurs moments de rappel.">Full-stack app (Python back-end, Flask interface) with automated pipelines for cleaning, processing and visualizing data. Surfaces call-failure causes and best call-back times.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;40+ heures économisées par mois&lt;/strong&gt; pour l'équipe du centre d'appels."><strong>40+ hours saved a month</strong> for the call-center team.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Plotly</span><span class="tag">Data Visualization</span><span class="tag">Git</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx">UmanLink</span>
@@ -388,7 +390,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Assistant multi-agents pour la recherche de produits, le suivi des commandes et la gestion des FAQ, au-dessus d'une base de données vectorielle et du RAG.">Multi-agent assistant for product search, order tracking and FAQ handling over a vector database and RAG.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;+12% de conversion&lt;/strong&gt; ; environ 60% des demandes au support (livraison, remboursements, retours) traitées automatiquement."><strong>+12% conversion</strong>; about 60% of support queries (shipping, refunds, returns) handled automatically.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">GPT-4</span><span class="tag">Multi-Agent Systems</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Chroma</span><span class="tag">Vector Databases</span><span class="tag">Streamlit</span><span class="tag">Git</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
     </div>
 
@@ -400,7 +402,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Chatbot IA full-stack pour l'équipe de natation de l'EST : suivi des séances, des progrès et de la nutrition avec des programmes personnalisés, et un moteur de recherche sur l'historique des compétitions de l'équipe. Développé en Agile.">Full-stack AI chatbot for the EST swimming team: session, progress and nutrition tracking with personalized programs, and a search engine over the team's competition history. Built in Agile.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;38 000+ enregistrements de compétition&lt;/strong&gt; rendus interrogeables en langage naturel."><strong>38,000+ competition records</strong> made searchable in natural language.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">LLaMA 3.1</span><span class="tag">LangChain</span><span class="tag">RAG</span><span class="tag">Text-to-SQL</span><span class="tag">Streamlit</span><span class="tag">Web Scraping</span><span class="tag">Agile / Scrum</span><span class="tag">Git</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
       <div class="card reveal">
         <span class="ctx" data-fr="Académique · Théorie des graphes">Academic · Graph Theory</span>
@@ -434,7 +436,7 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
         <p data-fr="Plateforme de reporting SEO automatisée combinant analyse de données, tableaux de bord et résumés générés par IA.">Automated SEO reporting platform combining data analysis, dashboards and AI-generated summaries.</p>
         <div class="card-metric" data-fr="&lt;strong&gt;Traitement réduit de 90%+&lt;/strong&gt; (de plusieurs jours à quelques minutes), avec des résumés NLP à 97% de précision."><strong>Processing cut by 90%+</strong> (days to minutes), with NLP summaries at 97% accuracy.</div>
         <div class="tags"><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Machine Learning</span><span class="tag">GPT-3.5</span><span class="tag">BeautifulSoup</span><span class="tag">Web Scraping</span><span class="tag">Pandas</span><span class="tag">Power BI</span><span class="tag">Data Visualization</span></div>
-        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé, disponible sur demande">Private, available on request</span></span></div>
+        <div class="card-links"><span class="card-link locked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span data-fr="Privé">Private</span></span></div>
       </div>
     </div>
   </div>
@@ -596,8 +598,9 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 <section id="contact">
   <div class="wrap">
     <div class="contact-card reveal">
+      <div style="font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-bottom:10px" data-fr="Disponible pour un stage en ingénierie IA">Open to an AI engineering internship</div>
       <h2 data-fr="Construisons quelque chose.">Let's build something.</h2>
-      <p data-fr="Je recherche un stage de fin d'études en ingénierie IA, et je suis toujours partant pour une bonne discussion sur l'IA, les startups ou le football.">I am looking for an end-of-studies internship in AI engineering, and always up for a good conversation about AI, startups, or football.</p>
+      <p data-fr="Si vous recrutez un stagiaire en ingénierie IA ou ML, écrivez-moi : l'e-mail est le moyen le plus rapide de me joindre, et mon CV est à un clic ci-dessous. Je réponds vite.">If you're hiring an AI or ML engineering intern, I'd love to talk. Email is the fastest way to reach me, and my CV is one click below. I reply fast.</p>
       <div class="contact-links">
         <a class="clink solid" href="mailto:mohamed-ali.aoun@dauphine.eu">
           <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
@@ -647,8 +650,12 @@ svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-l
 document.getElementById('yr').textContent=new Date().getFullYear();
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>10)});
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
 const root=document.documentElement, tb=document.getElementById('themeBtn');
 let stored=null; try{stored=localStorage.getItem('theme')}catch(e){}
 if(stored) root.setAttribute('data-theme',stored);
@@ -698,7 +705,7 @@ if(langBtn) langBtn.addEventListener('click',()=>applyLang(window.__lang==='fr'?
   function chips(){const c=document.createElement('div');c.className='chat-chips';(SUGG[L()]).forEach(q=>{const b=document.createElement('button');b.className='chat-chip';b.textContent=q;b.onclick=()=>{c.remove();ask(q);};c.appendChild(b);});body.appendChild(c);body.scrollTop=body.scrollHeight;}
   function typing(){const d=document.createElement('div');d.className='msg bot typing';d.innerHTML='<span></span><span></span><span></span>';body.appendChild(d);body.scrollTop=body.scrollHeight;return d;}
 
-  function open(){panel.classList.add('open');fab.style.display='none';if(!greeted){greeted=true;bubble(GREET[L()],'bot');chips();}setTimeout(()=>input.focus(),50);}
+  function open(){panel.classList.add('open');fab.style.display='none';if(!greeted){greeted=true;bubble(GREET[L()],'bot');}setTimeout(()=>input.focus(),50);}
   function close(){panel.classList.remove('open');fab.style.display='inline-flex';}
   fab.onclick=open; closeB.onclick=close;
 
