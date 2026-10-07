@@ -730,19 +730,23 @@ if(langBtn) langBtn.addEventListener('click',()=>applyLang(window.__lang==='fr'?
       })();
       // reveal the buffer at a steady typewriter pace (with catch-up for long answers)
       await new Promise(resolve=>{
-        let last=performance.now();
-        function tick(now){
-          const dt=Math.min(0.05,(now-last)/1000); last=now;
-          if(shown<target.length){
-            const backlog=target.length-shown;
-            let step=Math.max(1, Math.round(45*dt));      // ~45 characters per second
-            if(backlog>200) step+=Math.round((backlog-200)*0.15); // speed up if a lot is queued
-            shown=Math.min(target.length, shown+step);
-            el.textContent=target.slice(0,shown); body.scrollTop=body.scrollHeight;
+        const CPS=22;                                   // base speed: ~22 characters/second
+        function stepOnce(){
+          if(shown>=target.length){
+            if(reading){ setTimeout(stepOnce,40); return; } // nothing buffered yet, wait for more
+            resolve(); return;                              // done
           }
-          if(reading || shown<target.length) requestAnimationFrame(tick); else resolve();
+          shown++;
+          el.textContent=target.slice(0,shown); body.scrollTop=body.scrollHeight;
+          const ch=target[shown-1];
+          let delay=1000/CPS;                             // normal character
+          if(/[.!?]/.test(ch)) delay=300;                 // brief hold after a sentence
+          else if(ch===','||ch===';'||ch===':') delay=160;// shorter hold after a clause
+          const backlog=target.length-shown;
+          if(backlog>400) delay=Math.max(9, delay*0.3);   // gently catch up on very long answers
+          setTimeout(stepOnce, delay);
         }
-        requestAnimationFrame(tick);
+        stepOnce();
       });
       await pump.catch(()=>{});
       let full=target;
